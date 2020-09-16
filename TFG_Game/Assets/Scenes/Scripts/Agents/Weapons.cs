@@ -1,0 +1,10 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Weapons : MonoBehaviour
+{
+    enum weaponType { SWORD }
+
+    weaponType type;
+}
