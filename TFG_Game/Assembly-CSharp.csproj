@@ -53,16 +53,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
-    <Compile Include="Assets\Scenes\Scripts\Agents\Enemy.cs" />
-    <Compile Include="Assets\Scenes\Scripts\Camera\CameraCollision.cs" />
-    <Compile Include="Assets\Scenes\Scripts\Agents\InputManager.cs" />
-    <Compile Include="Assets\Scenes\Scripts\Interactuable\Interactuable.cs" />
-    <Compile Include="Assets\Scenes\Scripts\Agents\Weapons.cs" />
-    <Compile Include="Assets\Scenes\Scripts\Agents\Agent.cs" />
-    <Compile Include="Assets\Scenes\Scripts\Camera\CameraFollow.cs" />
-    <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\Scenes\Scripts\Agents\Player.cs" />
-    <Compile Include="Assets\Scenes\Scripts\Camera\CameraLock.cs" />
+    <Compile Include="Assets\Scripts\Agents\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraCollision.cs" />
+    <Compile Include="Assets\Scripts\Agents\InputManager.cs" />
+    <Compile Include="Assets\Scripts\Interactuable\Interactuable.cs" />
+    <Compile Include="Assets\Scripts\Agents\Weapons.cs" />
+    <Compile Include="Assets\Scripts\Agents\Agent.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\Agents\Player.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraLock.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
