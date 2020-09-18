@@ -1,74 +1,71 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class CameraLock : MonoBehaviour
 {
-    public float lockDelta = 0.5F;
-    private float nextLock = 0.5F;
-    private float myTime = 0.0F;
-    private bool haveToRotate = false;
+    //Target object to lock to
+    public Transform Model;
+    public Transform TargetLock;
+    private bool isTargetLocked = false;
+    private Camera mainCamera;
 
-    public GameObject closestEnemy;
-    private Vector3 distanceToEnemy;
-    public float angleRotation;
-    public float smooth = 1.0f;
+    //RANGO CONFIGURABLE DE VELOCIDAD DE ROTACION
+    [Range(20f, 80f)]
+    public float RotationSpeed = 20f;
 
+    //INPUT DIRECTION
+    private Vector3 StickDirection;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        mainCamera = Camera.main;
+    }
+
+    // Update is called once per frame
     void Update()
     {
-        myTime = myTime + Time.deltaTime;
+        StickDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-        if (Input.GetButtonDown("Fire1") && myTime > nextLock)
+        //EN EL TUTO SITUAN AQUI LA INFORMACION DEL ANIMATOR
+        HandleStandardLocomotionRotation();
+
+        //Fijamos enemigo cuando pulsemos espacio
+        if(Input.GetKeyDown(KeyCode.Space))
         {
-            nextLock = myTime + lockDelta;
-
-            // create code here that animates the newProjectile
-            Debug.Log("Entro en el LOCK");
-            closestEnemy = FindClosestEnemy();
-
-            //LOOK TO ENEMY
-            //LERP (NO SNAP)
-            //haveToRotate = true;           
-
-            //LOOK AT (SNAP)
-            //transform.LookAt(closestEnemy.transform.position);
-            transform.DOLookAt(closestEnemy.transform.position, 0.5f);
-
-            nextLock = nextLock - myTime;
-            myTime = 0.0F;
-        }
-
-        RotateTo(closestEnemy);
-    }
-
-    public GameObject FindClosestEnemy()
-    {
-        //PARA OPTIMIZAR HABRíA QUE TENER DESDE UN INICIO TODOS LOS ENEMIGOS CARGADOS EN UN ARRAY (PARA NO SOBRECARGAR EL UPDATE)
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        float minDistance = Mathf.Abs((enemies[0].transform.position - transform.position).magnitude);
-        GameObject closest = enemies[0];
-
-        foreach (GameObject enemy in enemies)
-        {
-            float calculateMinDistance = Mathf.Abs((enemy.transform.position - transform.position).magnitude);
-            if (calculateMinDistance < minDistance)
+            if (isTargetLocked)
             {
-                minDistance = calculateMinDistance;
-                closest = enemy;
+                Debug.Log("LockRotation");
+                HandleLockedLocomotionRotation();
+                isTargetLocked = false;
+            }
+            else
+            {
+                Debug.Log("StandardRotation");
+                HandleStandardLocomotionRotation();
+                isTargetLocked = true;
             }
         }
-
-        return closest;
     }
 
-    public void RotateTo(GameObject closestEnemy)
+    private void HandleStandardLocomotionRotation()
     {
-        if (haveToRotate)
-        {
-            distanceToEnemy = (closestEnemy.transform.position - transform.position).normalized;
-            angleRotation = Vector3.Angle(transform.forward, distanceToEnemy);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angleRotation, transform.up), 10 * smooth * Time.deltaTime);
-        }
+        Vector3 rotationOffset = mainCamera.transform.TransformDirection(StickDirection);
+        rotationOffset.y = 0;
+
+        //Podría usarse el DoTween tambien
+        Model.forward += Vector3.Lerp(Model.forward, rotationOffset, Time.deltaTime * RotationSpeed);
+    }
+
+    private void HandleLockedLocomotionRotation()
+    {
+        //en este caso la referencia de rotacion es el target, no la camara
+        //targetposition - currentposition = vector direccion desde la posiciona actual hasta la posicion del objetivo
+        Vector3 rotationOffset = TargetLock.transform.position - Model.transform.position;
+        rotationOffset.y = 0;
+
+        //Podría usarse el DoTween tambien
+        Model.forward += Vector3.Lerp(Model.forward, rotationOffset, Time.deltaTime * RotationSpeed);
     }
 }
