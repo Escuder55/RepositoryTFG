@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class DialogueManager : MonoBehaviour
 {
     #region VARIABLES
+    //Para el texto
+    [Header("DIALOGUE")]
     public GameObject canvasDialogue;
     public Animator dialogueAnimator;
 
@@ -19,6 +22,17 @@ public class DialogueManager : MonoBehaviour
 
     bool isplayerInside = false;
     bool dialogueIsStarted = false;
+
+    //Para la cámara
+    [Header("CAMERA")]
+    public Camera cameraMain;
+    public Transform cameraDialogueHanlder;
+    public Transform newPositionCamera;
+    Vector3 lastCameraPosition;
+    Vector3 lastCamerRotation;
+    float lastFOV;
+    Transform playerTransform;
+    
 
     #endregion
 
@@ -51,7 +65,17 @@ public class DialogueManager : MonoBehaviour
             //Iniciamos el dialogo
             dialogueIsStarted = true;
             triggerDialogue.TriggerDialogue();
-        }
+
+            //Movemos la cámara
+            lastCameraPosition = cameraMain.transform.position;
+            lastCamerRotation = cameraMain.transform.rotation.eulerAngles;
+            lastFOV = cameraMain.fieldOfView;
+
+            cameraMain.transform.DOMove(newPositionCamera.position, 1f);
+            cameraMain.transform.DORotate(newPositionCamera.rotation.eulerAngles, 1f);
+            cameraMain.DOFieldOfView(65,1f);
+
+        }      
         
     }
     #endregion
@@ -108,8 +132,13 @@ public class DialogueManager : MonoBehaviour
     #region END DIALOGUE
     public void EndDialogue()
     {
-        //Activamos la animación
+        //Activamos la animación del Dialogo
         dialogueAnimator.SetBool("isOpen", false);
+
+        //Dejamos la cámara donde estaba antes de empezar el dialogo
+        cameraMain.transform.DOMove(lastCameraPosition, 1f);
+        cameraMain.transform.DORotate(lastCamerRotation, 1f);
+        cameraMain.DOFieldOfView(lastFOV, 1f);
 
         Invoke("DeactivateCanvas", 0.45f);
     }
@@ -121,6 +150,7 @@ public class DialogueManager : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isplayerInside = true;
+            playerTransform = other.GetComponent<Transform>();
         }
     }
     #endregion
