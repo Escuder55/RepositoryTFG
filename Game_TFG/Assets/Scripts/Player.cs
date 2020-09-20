@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : Agent
 {
     #region ENUMS
-    enum actions { ATTACK, DEFEND, INTERACT, JUMP, MOVE }
+    enum actions { HEAVYATTACK, LIGHTATTACK, DEFEND, INTERACT, JUMP, MOVE }
     enum skills { }
     #endregion
 
@@ -19,7 +19,10 @@ public class Player : Agent
     InputManager myInput;
     bool isJumping;
     /// //
-    
+    //Attack
+    int currentCombo;
+    float timeAttackCounter;
+
     //public/////////////
     public int myCrystals;
     public int myCrystalsPowder;
@@ -37,6 +40,8 @@ public class Player : Agent
 
         //Initialize
         speed = 3;
+        currentCombo = 0;
+        timeAttackCounter = 0f;
     }
 
     void GetInpuCOntroller()
@@ -71,10 +76,46 @@ public class Player : Agent
     {
     }
 
-    void Attack()
-    {
+    void Attack(actions attackType)
+    {        
+        if (attackType == actions.LIGHTATTACK)
+        {
+            switch (currentCombo)
+            {
+                case 0:
+                    currentCombo++;
+                    //activate 1st hit animation
+
+                    Debug.Log("Curent combo : " + currentCombo);
+                    break;
+                case 1:
+                    currentCombo++;
+                    //activate 2nd hit animation
+
+                    Debug.Log("Curent combo : " + currentCombo);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (attackType == actions.HEAVYATTACK)
+        {
+            //activate heavy attack
+            Debug.Log("Heavy attack done");
+
+            resetCombo();//anim debera notificar reset
+        }
     }
 
+    void resetCombo()
+    {
+        //maybe handle anim
+
+        //logic
+        currentCombo = 0;
+        Debug.Log("Combo reset. Curent combo : " + currentCombo);
+    }
+    
     void Protect()
     {
     }
@@ -87,6 +128,7 @@ public class Player : Agent
 
     private void Update()
     {
+        //jump
         if (myInput.jump && !isJumping)
         {
             isJumping = true;
@@ -97,12 +139,34 @@ public class Player : Agent
         {
             isJumping = false;
         }
+
+        //Light attack
+        if (Input.GetMouseButtonDown(0))
+        {
+            Attack(actions.LIGHTATTACK);
+            timeAttackCounter = 2;
+        }
+        //Heavy attack
+        if (Input.GetMouseButtonDown(1))
+        {
+            Attack(actions.HEAVYATTACK);
+            
+        }
+
+        if (timeAttackCounter > 0)
+        {
+            timeAttackCounter = timeAttackCounter - Time.deltaTime;
+            if (timeAttackCounter <= 0)
+            {
+                resetCombo();
+            }
+        }
+        
     }
 
     public void StopMovement()
     {
     }
-
-    
+        
     #endregion
 }
