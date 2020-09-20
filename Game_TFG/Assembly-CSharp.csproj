@@ -62,13 +62,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Door.cs" />
     <Compile Include="Assets\Scripts\Agent.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraCollision.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraLock.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />
+    <Compile Include="Assets\Scripts\Interactives\Dialogue\Dialogue.cs" />
+    <Compile Include="Assets\Scripts\Interactives\Dialogue\DialogueManager.cs" />
+    <Compile Include="Assets\Scripts\Interactives\Dialogue\DialogueTrigger.cs" />
+    <Compile Include="Assets\Scripts\Interactives\Door.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\Scripts\Weapons.cs" />
