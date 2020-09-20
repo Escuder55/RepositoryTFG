@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     #region VARIABLES
+    public GameObject canvasDialogue;
+    public Animator dialogueAnimator;
+
     public Text nameText;
     public Text dialogueText;
 
@@ -23,6 +26,8 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         sentences = new Queue<string>();
+
+        canvasDialogue.SetActive(false);
     }
     #endregion
 
@@ -31,11 +36,19 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueIsStarted && Input.anyKeyDown)
         {
+            //Enseñamos la siguiente frase
             DisplayNextSentence();
         }
 
         if (isplayerInside && Input.GetKeyDown(KeyCode.E) && !dialogueIsStarted)
         {
+            //activamos el canvas
+            canvasDialogue.SetActive(true);
+
+            //Activamos la animación
+            dialogueAnimator.SetBool("isOpen", true);
+
+            //Iniciamos el dialogo
             dialogueIsStarted = true;
             triggerDialogue.TriggerDialogue();
         }
@@ -47,10 +60,13 @@ public class DialogueManager : MonoBehaviour
     #region START DIALOGUE
     public void StartDialogue(Dialogue dialogue)
     {
+        //Cogemos el texto
         nameText.text = dialogue.nameNPC;
 
+        //limpiamos la queue de frases
         sentences.Clear();
 
+        //llenamos la queue de frases con el dialogo
         foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
@@ -92,8 +108,10 @@ public class DialogueManager : MonoBehaviour
     #region END DIALOGUE
     public void EndDialogue()
     {
-        Debug.Log("End of Conversation");
-        dialogueIsStarted = false;
+        //Activamos la animación
+        dialogueAnimator.SetBool("isOpen", false);
+
+        Invoke("DeactivateCanvas", 0.45f);
     }
     #endregion
 
@@ -114,6 +132,15 @@ public class DialogueManager : MonoBehaviour
         {
             isplayerInside = false;
         }
+    }
+    #endregion
+
+    #region DEACTIVATE CANVAS
+    void DeactivateCanvas()
+    {
+        //desactivamos el Canvas
+        canvasDialogue.SetActive(false);
+        dialogueIsStarted = false;
     }
     #endregion
 

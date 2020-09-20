@@ -153,9 +153,9 @@ RectTransform:
   m_Father: {fileID: 400025218}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 42, y: -5.3974}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 42, y: 44.6026}
   m_SizeDelta: {x: 212.87445, y: 40.79486}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &16239498
@@ -231,10 +231,10 @@ RectTransform:
   m_Father: {fileID: 400025218}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 31, y: -0}
-  m_SizeDelta: {x: 103.73657, y: -48.41028}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 31, y: 50}
+  m_SizeDelta: {x: 203.73657, y: 51.58972}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &121656129
 MonoBehaviour:
@@ -583,10 +583,10 @@ RectTransform:
   m_Father: {fileID: 2089721603}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5.200012, y: 67}
-  m_SizeDelta: {x: 1528.067, y: 111.65665}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -6, y: 117}
+  m_SizeDelta: {x: 1496.1113, y: 211.65665}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &243559230
 MonoBehaviour:
@@ -910,11 +910,11 @@ RectTransform:
   - {fileID: 1380315935}
   - {fileID: 16239497}
   m_Father: {fileID: 1781590494}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -772.54, y: 290}
+  m_AnchoredPosition: {x: 1159, y: 290}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &405401968
@@ -1023,10 +1023,10 @@ RectTransform:
   m_Father: {fileID: 2089721603}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3.2999878, y: 13}
-  m_SizeDelta: {x: 1212.6733, y: 128.83713}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -6.6, y: 63}
+  m_SizeDelta: {x: 1168.4265, y: 228.83713}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &421991761
 MonoBehaviour:
@@ -2122,6 +2122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c612193fcdf388945991da5436421489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasDialogue: {fileID: 1781590493}
+  dialogueAnimator: {fileID: 1781590498}
   nameText: {fileID: 16239498}
   dialogueText: {fileID: 421991761}
   triggerDialogue: {fileID: 867278782}
@@ -2366,77 +2368,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!1 &986336622
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 986336623}
-  - component: {fileID: 986336624}
-  - component: {fileID: 986336625}
-  m_Layer: 0
-  m_Name: DialogueManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &986336623
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 986336622}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1781590494}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &986336624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 986336622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c612193fcdf388945991da5436421489, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameText: {fileID: 0}
-  dialogueText: {fileID: 0}
-  triggerDialogue: {fileID: 0}
---- !u!114 &986336625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 986336622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fd4ea6425706e04cbbafb87376d0eaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue:
-    nameNPC: Aika
-    sentences:
-    - "Hey! Wake Up!!\t\t"
-    - It's so important you must wake up. We have to save the village and the entire
-      island.
-    - Common hurry up and came with me, I have to show you something.
 --- !u!1 &991023085
 GameObject:
   m_ObjectHideFlags: 0
@@ -2631,10 +2562,10 @@ RectTransform:
   m_Father: {fileID: 400025218}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 31, y: -0}
-  m_SizeDelta: {x: 103.73657, y: -48.41028}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 31, y: 50}
+  m_SizeDelta: {x: 203.73657, y: 51.58972}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1380315936
 MonoBehaviour:
@@ -3066,10 +2997,10 @@ RectTransform:
   m_Father: {fileID: 2089721603}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5.200012, y: 67}
-  m_SizeDelta: {x: 1528.067, y: 111.65665}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -6, y: 117}
+  m_SizeDelta: {x: 1496.1113, y: 211.65665}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1755326944
 MonoBehaviour:
@@ -3120,13 +3051,14 @@ GameObject:
   - component: {fileID: 1781590497}
   - component: {fileID: 1781590496}
   - component: {fileID: 1781590495}
+  - component: {fileID: 1781590498}
   m_Layer: 0
   m_Name: DialogueCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1781590494
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3138,7 +3070,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 986336623}
   - {fileID: 2089721603}
   - {fileID: 400025218}
   m_Father: {fileID: 867278777}
@@ -3209,6 +3140,25 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!95 &1781590498
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781590493}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fe3de777df7300e4caceb02a89789776, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1805956206
 GameObject:
   m_ObjectHideFlags: 0
@@ -3453,7 +3403,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2089721603}
-  - component: {fileID: 2089721604}
   m_Layer: 0
   m_Name: DialogueBox
   m_TagString: Untagged
@@ -3476,29 +3425,10 @@ RectTransform:
   - {fileID: 1755326943}
   - {fileID: 421991760}
   m_Father: {fileID: 1781590494}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 11.791, y: 58.240997}
+  m_AnchoredPosition: {x: -2053, y: 58.240997}
   m_SizeDelta: {x: -160, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &2089721604
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2089721602}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6891408784bec9a47bc2175ebf854b75, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
