@@ -18,12 +18,23 @@ public class Player : Agent
     Transform cam;
     InputManager myInput;
     bool isJumping;
-    /// //
-    
+    private int MAXLIFE = 6;
+    private int comboCounter=0;
+    bool heavyAttack = false;
+    /// // cada 10 es un crystal
+    [SerializeField] int MAXSWORDCRYSTALS = 20;
+    [SerializeField] int MAXSHIELDCRYSTALS = 20;
+    [SerializeField] int MAXBOOTSCRYSTALS = 20;
+
+    [SerializeField] float swordCrystalEnergy;
+    [SerializeField] float shieldCrystalEnergy;
+    [SerializeField] float bootsCrystalEnergy;
+
     //public/////////////
     public int myCrystals;
     public int myCrystalsPowder;
     public Weapons CurrentWeapon;
+    public int currentLife;
     #endregion
 
     #region METHODS
@@ -37,6 +48,11 @@ public class Player : Agent
 
         //Initialize
         speed = 3;
+        currentLife = MAXLIFE;
+        //EnergyCounters
+        swordCrystalEnergy = MAXSWORDCRYSTALS;
+        shieldCrystalEnergy = MAXSHIELDCRYSTALS;
+        bootsCrystalEnergy = MAXBOOTSCRYSTALS;
     }
 
     void GetInpuCOntroller()
@@ -69,10 +85,35 @@ public class Player : Agent
 
     void Dash()
     {
+        Debug.Log("Dash done");
     }
 
-    void Attack()
+    void LightAttack()
     {
+        comboCounter++;
+        switch (comboCounter)
+        {
+            case 1:
+                Debug.Log("LightAttack : 1");
+                break;
+            case 2:
+                Debug.Log("LightAttack : 2");
+                break;
+            case 3:
+                Debug.Log("LightAttack : 3");
+                break;
+            default:
+                break;
+        }
+        if (comboCounter > 3)
+            comboCounter = 0;
+    }
+
+    void HeavyAttack()
+    {
+        heavyAttack = true;
+        Debug.Log("Heavy Attack!");
+        comboCounter = 0;
     }
 
     void Protect()
@@ -87,6 +128,14 @@ public class Player : Agent
 
     private void Update()
     {
+        //controlamos input recogido
+        Controller();
+        //
+        UpdateCounters();
+    }
+
+    private void Controller()
+    {
         if (myInput.jump && !isJumping)
         {
             isJumping = true;
@@ -97,12 +146,37 @@ public class Player : Agent
         {
             isJumping = false;
         }
+        if (myInput.dash && (bootsCrystalEnergy>=10))
+        {
+            Dash();
+            myInput.dash = false;
+            bootsCrystalEnergy -= 10;
+        }
+        if (myInput.lightAttack)
+        {
+            LightAttack();
+            myInput.lightAttack = false;
+        }
+        if (myInput.HeavyAttack)
+        {
+            HeavyAttack();
+            myInput.HeavyAttack = false;
+        }
     }
 
     public void StopMovement()
     {
     }
 
+    private void UpdateCounters()
+    {
+        if (bootsCrystalEnergy < MAXBOOTSCRYSTALS)
+            bootsCrystalEnergy += Time.deltaTime;
+        if (swordCrystalEnergy < MAXSWORDCRYSTALS)
+            swordCrystalEnergy += Time.deltaTime;
+        if (shieldCrystalEnergy < MAXSHIELDCRYSTALS)
+            shieldCrystalEnergy += Time.deltaTime;
+    }
     
     #endregion
 }
