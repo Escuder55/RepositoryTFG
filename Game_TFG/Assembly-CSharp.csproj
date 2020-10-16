@@ -62,13 +62,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AnimationController.cs" />
-    <Compile Include="Assets\CancelHeavy.cs" />
-    <Compile Include="Assets\CancelHit1.cs" />
-    <Compile Include="Assets\CancelHit2.cs" />
-    <Compile Include="Assets\CancelHit3.cs" />
-    <Compile Include="Assets\IdleBehaviour.cs" />
     <Compile Include="Assets\Scripts\Agent.cs" />
+    <Compile Include="Assets\Scripts\Animations\AnimationController.cs" />
+    <Compile Include="Assets\Scripts\Animations\CancelHeavy.cs" />
+    <Compile Include="Assets\Scripts\Animations\CancelHit1.cs" />
+    <Compile Include="Assets\Scripts\Animations\CancelHit2.cs" />
+    <Compile Include="Assets\Scripts\Animations\CancelHit3.cs" />
+    <Compile Include="Assets\Scripts\Animations\IdleBehaviour.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraLock.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />
