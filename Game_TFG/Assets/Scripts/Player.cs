@@ -20,7 +20,9 @@ public class Player : Agent
     bool isJumping;
     private int MAXLIFE = 6;
     private int comboCounter=0;
+    private float distToGround;
     bool heavyAttack = false;
+    [SerializeField] Collider myCol;
     /// // cada 10 es un crystal
     [SerializeField] int MAXSWORDCRYSTALS = 20;
     [SerializeField] int MAXSHIELDCRYSTALS = 20;
@@ -53,6 +55,8 @@ public class Player : Agent
         swordCrystalEnergy = MAXSWORDCRYSTALS;
         shieldCrystalEnergy = MAXSHIELDCRYSTALS;
         bootsCrystalEnergy = MAXBOOTSCRYSTALS;
+
+        distToGround = myCol.bounds.extents.y;
     }
 
     void GetInpuCOntroller()
@@ -136,13 +140,13 @@ public class Player : Agent
 
     private void Controller()
     {
-        if (myInput.jump && !isJumping)
+        if (myInput.jump && IsGrounded())
         {
+            Jump();
             isJumping = true;
             myInput.jump = false;
-            Jump();
         }
-        else //if(isgrounded)
+        else if(IsGrounded())
         {
             isJumping = false;
         }
@@ -177,6 +181,11 @@ public class Player : Agent
         if (shieldCrystalEnergy < MAXSHIELDCRYSTALS)
             shieldCrystalEnergy += Time.deltaTime;
     }
-    
+
+    private bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, (float)(distToGround));
+    }
+
     #endregion
 }
