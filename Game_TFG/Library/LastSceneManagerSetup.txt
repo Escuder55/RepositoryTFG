@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/TestingScenes/AnimatorScene.unity
+- path: Assets/Scenes/TestingScenes/Sergio Interactuables.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
