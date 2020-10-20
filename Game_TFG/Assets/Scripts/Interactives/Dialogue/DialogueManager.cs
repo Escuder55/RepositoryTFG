@@ -25,15 +25,13 @@ public class DialogueManager : MonoBehaviour
 
     //Para la cámara
     [Header("CAMERA")]
-    public Camera cameraMain;
     public Transform cameraDialogueHanlder;
     public Transform newPositionCamera;
+    Camera cameraMain;
     Vector3 lastCameraPosition;
     Vector3 lastCamerRotation;
     float lastFOV;
     Transform playerTransform;
-    
-
     #endregion
 
     #region START
@@ -42,6 +40,8 @@ public class DialogueManager : MonoBehaviour
         sentences = new Queue<string>();
 
         canvasDialogue.SetActive(false);
+
+        cameraMain = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
     #endregion
 
@@ -66,11 +66,12 @@ public class DialogueManager : MonoBehaviour
             dialogueIsStarted = true;
             triggerDialogue.TriggerDialogue();
 
-            //Movemos la cámara
+            //Guardamos la posición de la cámara
             lastCameraPosition = cameraMain.transform.position;
             lastCamerRotation = cameraMain.transform.rotation.eulerAngles;
             lastFOV = cameraMain.fieldOfView;
 
+            //Movemos la cámara
             cameraMain.transform.DOMove(newPositionCamera.position, 1f);
             cameraMain.transform.DORotate(newPositionCamera.rotation.eulerAngles, 1f);
             cameraMain.DOFieldOfView(65,1f);
