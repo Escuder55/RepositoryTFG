@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,12 +29,30 @@ public class PlayerHandlerCamera : MonoBehaviour
     private bool isWeaponEquipped = false;
     private bool isTargetLocked = false;
 
+    //CINEMACHINE
+    [Header("Cinemachine parameters")]
+    [SerializeField] private CinemachineFreeLook targetLockCinemachineCamera;
+
+    //Coge el script que haya en este objeto (en este caso se encuentra en TargetLockedObject)
+    [SerializeField] private CinemachineTargetGroup scriptTargetGroup;
+    public GameObject prueba;
+
+    private void Awake()
+    {
+        //En caso de que no este linkeada
+        if (scriptTargetGroup == null)
+            throw new NullReferenceException("No esta linkeado el script de targetGroup");
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = Camera.main;
         anim = model.GetComponent<Animator>();
+
+        //PRUEBA DE CAMBIO DE ENEMIGO
+        //targetLockCinemachineCamera.LookAt = prueba.transform;
+        //scriptTargetGroup.m_Targets[1].target = prueba.transform;
     }
 
     // Update is called once per frame
@@ -82,23 +101,12 @@ public class PlayerHandlerCamera : MonoBehaviour
         isTargetLocked = anim.GetBool("IsTargetLocked");
 
         //SOLO PODEMOS TARGETEAR EL ENEMIGO CUANDO ESTA EL ARMA EQUIPADA
-        if(isWeaponEquipped && Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
-            anim.SetBool("IsTargetLocked", !isTargetLocked);
-            isTargetLocked = !isTargetLocked;
-        }
-        else if (Input.GetKeyDown(KeyCode.F))
-        {
-            //on y off
             anim.SetBool("IsWeaponEquipped", !isWeaponEquipped);
-            //variable puede ser que la usemos despues
+            anim.SetBool("IsTargetLocked", !isTargetLocked);
             isWeaponEquipped = !isWeaponEquipped;
-            //si desequipamos el arma se nos sale del target lock state
-            if(isWeaponEquipped == false)
-            {
-                anim.SetBool("IsTargetLocked", false);
-                isTargetLocked = false;
-            }
+            isTargetLocked = !isTargetLocked;
         }
     }
 }
