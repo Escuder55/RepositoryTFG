@@ -45,7 +45,7 @@ public class Player : Agent
     #region METHODS
     private void Start()
     {
-
+        currentAction = actions.NONE;
         //Getting components //Input
         myInput = GameObject.FindGameObjectWithTag("GameManager").GetComponent<InputManager>();
         //Rb
@@ -64,16 +64,18 @@ public class Player : Agent
 
     void AddMovement()
     {
-        playerBody.velocity = new Vector3 (myInput.inputVector.x * speed,playerBody.velocity.y, myInput.inputVector.z * speed);
-        //rotate
-        transform.LookAt(transform.position + new Vector3 (myInput.inputVector.x,0f, myInput.inputVector.z));
-        if (playerBody.velocity.magnitude > 2)
-            currentAction = actions.WALK;
-        if (playerBody.velocity.magnitude > 2.9)
-            currentAction = actions.RUN;
-        else
-            currentAction = actions.NONE;
-
+        if ((currentAction != actions.LIGHTATTACK) && (currentAction != actions.HEAVYATTACK) && (currentAction != actions.DASH))
+        {
+            playerBody.velocity = new Vector3(myInput.inputVector.x * speed, playerBody.velocity.y, myInput.inputVector.z * speed);
+            //rotate
+            transform.LookAt(transform.position + new Vector3(myInput.inputVector.x, 0f, myInput.inputVector.z));
+            if (playerBody.velocity.magnitude > 2)
+                currentAction = actions.WALK;
+            if (playerBody.velocity.magnitude > 2.9)
+                currentAction = actions.RUN;
+            else
+                currentAction = actions.NONE;
+        }
     }
 
     void Skills(skills skill)

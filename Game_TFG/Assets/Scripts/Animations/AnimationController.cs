@@ -31,10 +31,9 @@ public class AnimationController : MonoBehaviour
         } 
         
         //LIGHT ATTACK 1
-        if (myPlayer.currentAction == actions.LIGHTATTACK)
+        if ((myPlayer.currentAction == actions.LIGHTATTACK) && (!characterAnimator.GetBool("Attack1")))
         {
             LightAttack1Animation();
-            Debug.Log("ha entradooo");
         }
         //LIGHT ATTACK 2
         else if (Input.GetKeyDown(KeyCode.Alpha5))
@@ -47,7 +46,7 @@ public class AnimationController : MonoBehaviour
             LightAttack3Animation();
         }
         //HEAVY ATTACK
-        else if (Input.GetKeyDown(KeyCode.Alpha7))
+        else if (myPlayer.currentAction==actions.HEAVYATTACK)
         {
             HeavyAttackAnimation();
         }
@@ -56,7 +55,9 @@ public class AnimationController : MonoBehaviour
     #region IDLE
     public void IdleAnimation()
     {
-        ResetAnimation();
+       ResetAnimation();
+        characterAnimator.SetBool("Walk", false);
+        characterAnimator.SetBool("Run", false);
     }
     #endregion
 
@@ -87,6 +88,7 @@ public class AnimationController : MonoBehaviour
     public void LightAttack2Animation()
     {
         characterAnimator.SetBool("Attack2", true);
+        
     }
     #endregion   
 
