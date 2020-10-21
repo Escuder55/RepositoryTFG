@@ -11,6 +11,8 @@ public class InputManager : MonoBehaviour
     public bool dash = false;
     public bool lightAttack = false;
     public bool HeavyAttack = false;
+    public bool ChargeAttack = false;
+    public bool Repel = false;
     public Vector3 inputVector;
 
 
@@ -39,6 +41,23 @@ public class InputManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             HeavyAttack = true;
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ChargeAttack = true;
+
+        }
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            ChargeAttack = false;
+        }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Repel = true;
+        }
+        if (Input.GetKeyUp(KeyCode.V))
+        {
+            Repel = false;
         }
     }
 }

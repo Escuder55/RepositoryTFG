@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : Agent
 {
     #region ENUMS
-    enum actions { ATTACK, DEFEND, INTERACT, JUMP, MOVE }
+    enum actions { LIGHTATTACK, HEAVYATTACK, DASH, REPEL, INTERACT, JUMP, CHARGEATTACK, NONE }
     enum skills { }
     #endregion
 
@@ -22,6 +22,8 @@ public class Player : Agent
     private int comboCounter=0;
     private float distToGround;
     bool heavyAttack = false;
+    bool chargeAttack = false;
+    bool repelMode = false;
     [SerializeField] Collider myCol;
     /// // cada 10 es un crystal
     [SerializeField] int MAXSWORDCRYSTALS = 20;
@@ -59,18 +61,6 @@ public class Player : Agent
         distToGround = myCol.bounds.extents.y;
     }
 
-    void GetInpuCOntroller()
-    {
-    }
-
-    void HandleGamePadInput()
-    {
-    }
-
-    void HandleKeyboardInput()
-    {
-    }
-
     void AddMovement()
     {
         playerBody.velocity = new Vector3 (myInput.inputVector.x * speed,playerBody.velocity.y, myInput.inputVector.z * speed);
@@ -85,15 +75,18 @@ public class Player : Agent
     void Jump()
     {
         playerBody.AddForce(new Vector3(0,100,0),ForceMode.Impulse);
+        currentAction = actions.JUMP;
     }
 
     void Dash()
     {
         Debug.Log("Dash done");
+        currentAction = actions.DASH;
     }
 
     void LightAttack()
     {
+        currentAction = actions.LIGHTATTACK;
         comboCounter++;
         switch (comboCounter)
         {
@@ -115,13 +108,10 @@ public class Player : Agent
 
     void HeavyAttack()
     {
+        currentAction = actions.HEAVYATTACK;
         heavyAttack = true;
         Debug.Log("Heavy Attack!");
         comboCounter = 0;
-    }
-
-    void Protect()
-    {
     }
 
     private void FixedUpdate()
@@ -166,10 +156,46 @@ public class Player : Agent
             HeavyAttack();
             myInput.HeavyAttack = false;
         }
+        if ((myInput.ChargeAttack && !chargeAttack) && (swordCrystalEnergy>10))
+        {
+            ChargeAttackStart();
+        }
+        if (chargeAttack && !myInput.ChargeAttack)
+        {
+            ChargeAttackFinish();
+        }
+        if (myInput.Repel && (shieldCrystalEnergy > 10))
+        {
+            repelMode = true;
+            Debug.Log("RepelModeOn");
+        }
+        if (repelMode && !myInput.Repel)
+        {
+            repelMode = false;
+            Debug.Log("RepelModeOff");
+        }
+    }
+
+    private void ChargeAttackStart()
+    {
+        currentAction = actions.CHARGEATTACK;
+        chargeAttack = true;
+        Debug.Log("Charge Attack Start");
+    }
+
+    private void ChargeAttackFinish()
+    {
+        Debug.Log("Charge Attack finish");
+        chargeAttack = false;
     }
 
     public void StopMovement()
     {
+    }
+
+    public void SetCurrentAtionNone()
+    {
+        currentAction = actions.NONE;
     }
 
     private void UpdateCounters()
