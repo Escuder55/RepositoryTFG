@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : Agent
 {
     #region ENUMS
-    enum actions { ATTACK, DEFEND, INTERACT, JUMP, MOVE }
+    enum actions { LIGHTATTACK, HEAVYATTACK, DASH, REPEL, INTERACT, JUMP, CHARGEATTACK, NONE }
     enum skills { }
     #endregion
 
@@ -18,12 +18,27 @@ public class Player : Agent
     Transform cam;
     InputManager myInput;
     bool isJumping;
-    /// //
-    
+    private int MAXLIFE = 6;
+    private int comboCounter=0;
+    private float distToGround;
+    bool heavyAttack = false;
+    bool chargeAttack = false;
+    bool repelMode = false;
+    [SerializeField] Collider myCol;
+    /// // cada 10 es un crystal
+    [SerializeField] int MAXSWORDCRYSTALS = 20;
+    [SerializeField] int MAXSHIELDCRYSTALS = 20;
+    [SerializeField] int MAXBOOTSCRYSTALS = 20;
+
+    [SerializeField] float swordCrystalEnergy;
+    [SerializeField] float shieldCrystalEnergy;
+    [SerializeField] float bootsCrystalEnergy;
+
     //public/////////////
     public int myCrystals;
     public int myCrystalsPowder;
     public Weapons CurrentWeapon;
+    public int currentLife;
     #endregion
 
     #region METHODS
@@ -37,18 +52,13 @@ public class Player : Agent
 
         //Initialize
         speed = 3;
-    }
+        currentLife = MAXLIFE;
+        //EnergyCounters
+        swordCrystalEnergy = MAXSWORDCRYSTALS;
+        shieldCrystalEnergy = MAXSHIELDCRYSTALS;
+        bootsCrystalEnergy = MAXBOOTSCRYSTALS;
 
-    void GetInpuCOntroller()
-    {
-    }
-
-    void HandleGamePadInput()
-    {
-    }
-
-    void HandleKeyboardInput()
-    {
+        distToGround = myCol.bounds.extents.y;
     }
 
     void AddMovement()
@@ -65,18 +75,43 @@ public class Player : Agent
     void Jump()
     {
         playerBody.AddForce(new Vector3(0,100,0),ForceMode.Impulse);
+        currentAction = actions.JUMP;
     }
 
     void Dash()
     {
+        Debug.Log("Dash done");
+        currentAction = actions.DASH;
     }
 
-    void Attack()
+    void LightAttack()
     {
+        currentAction = actions.LIGHTATTACK;
+        comboCounter++;
+        switch (comboCounter)
+        {
+            case 1:
+                Debug.Log("LightAttack : 1");
+                break;
+            case 2:
+                Debug.Log("LightAttack : 2");
+                break;
+            case 3:
+                Debug.Log("LightAttack : 3");
+                break;
+            default:
+                break;
+        }
+        if (comboCounter > 3)
+            comboCounter = 0;
     }
 
-    void Protect()
+    void HeavyAttack()
     {
+        currentAction = actions.HEAVYATTACK;
+        heavyAttack = true;
+        Debug.Log("Heavy Attack!");
+        comboCounter = 0;
     }
 
     private void FixedUpdate()
@@ -87,22 +122,96 @@ public class Player : Agent
 
     private void Update()
     {
-        if (myInput.jump && !isJumping)
+        //controlamos input recogido
+        Controller();
+        //
+        UpdateCounters();
+    }
+
+    private void Controller()
+    {
+        if (myInput.jump && IsGrounded())
         {
+            Jump();
             isJumping = true;
             myInput.jump = false;
-            Jump();
         }
-        else //if(isgrounded)
+        else if(IsGrounded())
         {
             isJumping = false;
         }
+        if (myInput.dash && (bootsCrystalEnergy>=10))
+        {
+            Dash();
+            myInput.dash = false;
+            bootsCrystalEnergy -= 10;
+        }
+        if (myInput.lightAttack)
+        {
+            LightAttack();
+            myInput.lightAttack = false;
+        }
+        if (myInput.HeavyAttack)
+        {
+            HeavyAttack();
+            myInput.HeavyAttack = false;
+        }
+        if ((myInput.ChargeAttack && !chargeAttack) && (swordCrystalEnergy>10))
+        {
+            ChargeAttackStart();
+        }
+        if (chargeAttack && !myInput.ChargeAttack)
+        {
+            ChargeAttackFinish();
+        }
+        if (myInput.Repel && (shieldCrystalEnergy > 10))
+        {
+            repelMode = true;
+            Debug.Log("RepelModeOn");
+        }
+        if (repelMode && !myInput.Repel)
+        {
+            repelMode = false;
+            Debug.Log("RepelModeOff");
+        }
+    }
+
+    private void ChargeAttackStart()
+    {
+        currentAction = actions.CHARGEATTACK;
+        chargeAttack = true;
+        Debug.Log("Charge Attack Start");
+    }
+
+    private void ChargeAttackFinish()
+    {
+        Debug.Log("Charge Attack finish");
+        chargeAttack = false;
     }
 
     public void StopMovement()
     {
     }
 
-    
+    public void SetCurrentAtionNone()
+    {
+        currentAction = actions.NONE;
+    }
+
+    private void UpdateCounters()
+    {
+        if (bootsCrystalEnergy < MAXBOOTSCRYSTALS)
+            bootsCrystalEnergy += Time.deltaTime;
+        if (swordCrystalEnergy < MAXSWORDCRYSTALS)
+            swordCrystalEnergy += Time.deltaTime;
+        if (shieldCrystalEnergy < MAXSHIELDCRYSTALS)
+            shieldCrystalEnergy += Time.deltaTime;
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, (float)(distToGround));
+    }
+
     #endregion
 }

@@ -6,8 +6,13 @@ public class InputManager : MonoBehaviour
 {
     
     //
-    public bool jump;
-    public bool move;
+    public bool jump = false;
+    public bool move = false;
+    public bool dash = false;
+    public bool lightAttack = false;
+    public bool HeavyAttack = false;
+    public bool ChargeAttack = false;
+    public bool Repel = false;
     public Vector3 inputVector;
 
 
@@ -24,6 +29,35 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jump = true;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            dash = true;
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            lightAttack = true;
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            HeavyAttack = true;
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ChargeAttack = true;
+
+        }
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            ChargeAttack = false;
+        }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Repel = true;
+        }
+        if (Input.GetKeyUp(KeyCode.V))
+        {
+            Repel = false;
         }
     }
 }
