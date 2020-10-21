@@ -2,26 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum actions { LIGHTATTACK, HEAVYATTACK, DASH, REPEL, INTERACT, JUMP, CHARGEATTACK, WALK, RUN, NONE }
+
 public class Player : Agent
 {
     #region ENUMS
-    enum actions { LIGHTATTACK, HEAVYATTACK, DASH, REPEL, INTERACT, JUMP, CHARGEATTACK, NONE }
     enum skills { }
     #endregion
 
     #region VARIABLES
 
     //private////////////
-    actions currentAction;
+    public actions currentAction;
     //Movement
     private Rigidbody playerBody;
     Transform cam;
     InputManager myInput;
     bool isJumping;
     private int MAXLIFE = 6;
-    private int comboCounter=0;
+    public int comboCounter=0;
     private float distToGround;
-    bool heavyAttack = false;
+    public bool heavyAttack = false;
     bool chargeAttack = false;
     bool repelMode = false;
     [SerializeField] Collider myCol;
@@ -66,6 +67,13 @@ public class Player : Agent
         playerBody.velocity = new Vector3 (myInput.inputVector.x * speed,playerBody.velocity.y, myInput.inputVector.z * speed);
         //rotate
         transform.LookAt(transform.position + new Vector3 (myInput.inputVector.x,0f, myInput.inputVector.z));
+        if (playerBody.velocity.magnitude > 2)
+            currentAction = actions.WALK;
+        if (playerBody.velocity.magnitude > 2.9)
+            currentAction = actions.RUN;
+        else
+            currentAction = actions.NONE;
+
     }
 
     void Skills(skills skill)
@@ -84,26 +92,16 @@ public class Player : Agent
         currentAction = actions.DASH;
     }
 
+    public void CleanComboCounter()
+    {
+        comboCounter = 0;
+    }
+
     void LightAttack()
     {
         currentAction = actions.LIGHTATTACK;
         comboCounter++;
-        switch (comboCounter)
-        {
-            case 1:
-                Debug.Log("LightAttack : 1");
-                break;
-            case 2:
-                Debug.Log("LightAttack : 2");
-                break;
-            case 3:
-                Debug.Log("LightAttack : 3");
-                break;
-            default:
-                break;
-        }
-        if (comboCounter > 3)
-            comboCounter = 0;
+        myInput.lightAttack = false;
     }
 
     void HeavyAttack()
@@ -149,7 +147,6 @@ public class Player : Agent
         if (myInput.lightAttack)
         {
             LightAttack();
-            myInput.lightAttack = false;
         }
         if (myInput.HeavyAttack)
         {

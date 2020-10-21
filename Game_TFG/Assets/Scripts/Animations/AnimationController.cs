@@ -5,30 +5,36 @@ using UnityEngine;
 public class AnimationController : MonoBehaviour
 {
     public Animator characterAnimator;
+    public Player myPlayer;
 
-
+    private void Start()
+    {
+        //Getting components //Input
+    }
     // Update is called once per frame
     void Update()
     {
         //IDLE
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (myPlayer.currentAction == actions.NONE)
         {
             IdleAnimation();
         }
-        //WALK
-        else if(Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            WalkAnimation();
-        }
         //RUN
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (myPlayer.currentAction == actions.WALK)
         {
             RunAnimation();
         }
+        //WALK
+        else if(myPlayer.currentAction == actions.RUN)
+        {
+            WalkAnimation();
+        } 
+        
         //LIGHT ATTACK 1
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        if (myPlayer.currentAction == actions.LIGHTATTACK)
         {
             LightAttack1Animation();
+            Debug.Log("ha entradooo");
         }
         //LIGHT ATTACK 2
         else if (Input.GetKeyDown(KeyCode.Alpha5))
