@@ -62,7 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Item.cs" />
     <Compile Include="Assets\Prefabs\LightRays2D\Script\LightRays2D.cs" />
     <Compile Include="Assets\Prefabs\LightRays2D\Script\LightRays2DAbstract.cs" />
     <Compile Include="Assets\Prefabs\LightRays2D\Script\LightRays2DCanvas.cs" />
@@ -81,6 +80,7 @@
     <Compile Include="Assets\Scripts\Interactives\Dialogue\DialogueManager.cs" />
     <Compile Include="Assets\Scripts\Interactives\Dialogue\DialogueTrigger.cs" />
     <Compile Include="Assets\Scripts\Interactives\Door.cs" />
+    <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\Scripts\Weapons.cs" />
@@ -685,6 +685,12 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>E:/UNI/TFG/PROYECTO/RepositoryTFG/Game_TFG/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Runtime">
+      <HintPath>E:/UNI/TFG/PROYECTO/RepositoryTFG/Game_TFG/Library/ScriptAssemblies/Unity.VisualEffectGraph.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Editor">
+      <HintPath>E:/UNI/TFG/PROYECTO/RepositoryTFG/Game_TFG/Library/ScriptAssemblies/Unity.VisualEffectGraph.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
