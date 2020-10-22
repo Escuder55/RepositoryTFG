@@ -78,9 +78,9 @@ public class Enemy : Agent
     }
     #endregion
 
-    #region FIXED UPDATE
+    #region UPDATE
     //Para cada frame
-    void FixedUpdate()
+    void Update()
     {
         distanceToRun = maxDistanceToPlayer * 0.5f;
         CheckChangeState();
