@@ -263,7 +263,7 @@ MonoBehaviour:
   initialSpawner: {fileID: 1692049933}
   timeSpawner: 0.35
   spawnForce: 2
-  newPositionCamera: {fileID: 0}
+  newPositionCamera: {fileID: 679141348}
   cameraPivot: {fileID: 0}
   transitionCameraTime: 1
   animationCameraTime: 4
@@ -3336,7 +3336,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 867278776}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c612193fcdf388945991da5436421489, type: 3}
+  m_Script: {fileID: 11500000, guid: 51c27086cde948b408c3f791e27c7e51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvasDialogue: {fileID: 1781590493}
