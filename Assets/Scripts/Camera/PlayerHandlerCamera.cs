@@ -26,7 +26,7 @@ public class PlayerHandlerCamera : MonoBehaviour
     //INPUT DIRECTION
     private Vector3 StickDirection;
 
-    private bool isWeaponEquipped = false;
+    //private bool isWeaponEquipped = false;
     private bool isTargetLocked = false;
 
     //CINEMACHINE
@@ -48,7 +48,7 @@ public class PlayerHandlerCamera : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        anim = model.GetComponent<Animator>();
+        //anim = model.GetComponent<Animator>();
 
         //PRUEBA DE CAMBIO DE ENEMIGO
         //targetLockCinemachineCamera.LookAt = prueba.transform;
@@ -59,7 +59,7 @@ public class PlayerHandlerCamera : MonoBehaviour
     void Update()
     {
         //WASD INPUT
-        StickDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        //StickDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         HandleInputData();
 
         //HANDLE ROTATION PARA MIRAR A DONDE SEÑALAMOS
@@ -94,18 +94,18 @@ public class PlayerHandlerCamera : MonoBehaviour
     private void HandleInputData()
     {
         //USING KEYBOARD AND PRESSING A DIAGONAL DIRECTION YOU COULD REACH A MAGNITUDE OF 1.4 so we clamp it.
-        anim.SetFloat("Speed", Vector3.ClampMagnitude(StickDirection, 1).magnitude);
-        anim.SetFloat("Horizontal", StickDirection.x);
-        anim.SetFloat("Vertical", StickDirection.z);
-        isWeaponEquipped = anim.GetBool("IsWeaponEquipped");
-        isTargetLocked = anim.GetBool("IsTargetLocked");
+        //anim.SetFloat("Speed", Vector3.ClampMagnitude(StickDirection, 1).magnitude);
+        //anim.SetFloat("Horizontal", StickDirection.x);
+       // anim.SetFloat("Vertical", StickDirection.z);
+        //isWeaponEquipped = anim.GetBool("IsWeaponEquipped");
+        //isTargetLocked = anim.GetBool("IsTargetLocked");
 
         //SOLO PODEMOS TARGETEAR EL ENEMIGO CUANDO ESTA EL ARMA EQUIPADA
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Z))
         {
-            anim.SetBool("IsWeaponEquipped", !isWeaponEquipped);
-            anim.SetBool("IsTargetLocked", !isTargetLocked);
-            isWeaponEquipped = !isWeaponEquipped;
+            //anim.SetBool("IsWeaponEquipped", !isWeaponEquipped);
+            //anim.SetBool("IsTargetLocked", !isTargetLocked);
+            //isWeaponEquipped = !isWeaponEquipped;
             isTargetLocked = !isTargetLocked;
         }
     }
