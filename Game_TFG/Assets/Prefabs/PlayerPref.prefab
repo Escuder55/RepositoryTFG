@@ -1943,8 +1943,8 @@ GameObject:
   - component: {fileID: 7456053972933395160}
   - component: {fileID: 7456053972933395161}
   - component: {fileID: 7456053972933395162}
-  - component: {fileID: 7456053972933395163}
   - component: {fileID: 7456053972933395111}
+  - component: {fileID: 7230351663957725727}
   m_Layer: 0
   m_Name: PlayerPref
   m_TagString: Player
@@ -2017,20 +2017,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7456053972933395163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7762042211355101497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a25c6f9dd0a68fb4bb651d15dcc81961, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterAnimator: {fileID: 7456053972933395162}
-  myPlayer: {fileID: 7456053972933395111}
 --- !u!114 &7456053972933395111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2059,6 +2045,20 @@ MonoBehaviour:
   myCrystalsPowder: 0
   CurrentWeapon: {fileID: 0}
   currentLife: 0
+--- !u!114 &7230351663957725727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762042211355101497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10c07c75a50254a458cb735611cd7225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterAnimator: {fileID: 7456053972933395162}
+  myPlayer: {fileID: 7456053972933395111}
 --- !u!1 &8122599814021792995
 GameObject:
   m_ObjectHideFlags: 0
