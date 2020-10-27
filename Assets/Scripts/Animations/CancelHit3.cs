@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CancelHit3 : StateMachineBehaviour
 {
-    public Player myPlayer;
+    Player myPlayer;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -17,6 +17,7 @@ public class CancelHit3 : StateMachineBehaviour
         if (myPlayer.heavyAttack)
         {
             animator.SetBool("Heavy", true);
+            animator.SetBool("Attack3", false);
             myPlayer.currentAction = actions.HEAVYATTACK;
         }
         else

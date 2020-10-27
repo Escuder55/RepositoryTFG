@@ -117,7 +117,7 @@ public class Player : Agent
     private void FixedUpdate()
     {
         //movement
-        AddMovement();
+        //AddMovement();
     }
 
     private void Update()
