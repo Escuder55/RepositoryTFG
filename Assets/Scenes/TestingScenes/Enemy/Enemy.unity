@@ -815,6 +815,7 @@ MonoBehaviour:
   speed: 5
   lifeThreshold: 30
   distanceToRun: 5
+  chargeForce: 10
   patrolPoints:
   - {fileID: 928471042}
   - {fileID: 1535017416}
