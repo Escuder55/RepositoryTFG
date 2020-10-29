@@ -37,6 +37,11 @@ public class PlayerHandlerCamera : MonoBehaviour
     [SerializeField] private CinemachineTargetGroup scriptTargetGroup;
     public GameObject prueba;
 
+    //GameObjects front of player
+    [Header("Enemies in front of camera")]
+    [SerializeField] private List<GameObject> enemies;
+    [SerializeField] private ColliderEnemies scriptColliderEnemies;
+
     private void Awake()
     {
         //En caso de que no este linkeada
@@ -49,10 +54,6 @@ public class PlayerHandlerCamera : MonoBehaviour
     {
         mainCamera = Camera.main;
         anim = model.GetComponent<Animator>();
-
-        //PRUEBA DE CAMBIO DE ENEMIGO
-        //targetLockCinemachineCamera.LookAt = prueba.transform;
-        //scriptTargetGroup.m_Targets[1].target = prueba.transform;
     }
 
     // Update is called once per frame
@@ -107,6 +108,15 @@ public class PlayerHandlerCamera : MonoBehaviour
             anim.SetBool("IsTargetLocked", !isTargetLocked);
             isWeaponEquipped = !isWeaponEquipped;
             isTargetLocked = !isTargetLocked;
+
+            //GETENEMIES FROM COLLIDER
+            enemies = scriptColliderEnemies.getEnemies();
+
+            //PRUEBA DE CAMBIO DE ENEMIGO
+            //targetLockCinemachineCamera.LookAt = prueba.transform;
+            //scriptTargetGroup.m_Targets[1].target = prueba.transform;
+
         }
     }
+
 }

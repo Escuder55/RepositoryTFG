@@ -109,6 +109,7 @@
     <Compile Include="Assets\Scripts\Animations\CancelHit3.cs" />
     <Compile Include="Assets\Scripts\Animations\IdleBehaviour.cs" />
     <Compile Include="Assets\Scripts\Camera\PlayerHandlerCamera.cs" />
+    <Compile Include="Assets\Scripts\ColliderEnemies.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />
     <Compile Include="Assets\Scripts\Interactives\Chest.cs" />
