@@ -380,8 +380,8 @@ public class Enemy : Agent
     #region ON DRAW GIZMOS
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(this.transform.position, maxDistanceToPlayer);
-        Gizmos.DrawWireSphere(this.transform.position, distanceToRun);
+        //Gizmos.DrawWireSphere(this.transform.position, maxDistanceToPlayer);
+        //Gizmos.DrawWireSphere(this.transform.position, distanceToRun);
     }
     #endregion
 }
