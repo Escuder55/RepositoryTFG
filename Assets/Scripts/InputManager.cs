@@ -13,9 +13,11 @@ public class InputManager : MonoBehaviour
     public bool ChargeAttack = false;
     public bool Repel = false;
     public Vector3 inputVector;
+    public float horizontal;
+    public float vertical;
 
 
-// Start is called before the first frame update
+    // Start is called before the first frame update
     void Start()
     {
         
@@ -25,6 +27,8 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         inputVector = new Vector3(Input.GetAxisRaw("Horizontal"),0, Input.GetAxisRaw("Vertical"));
+        horizontal = inputVector.x;
+        vertical = inputVector.z;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jump = true;

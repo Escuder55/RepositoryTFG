@@ -79,7 +79,7 @@ public class PlayerHandlerCamera : MonoBehaviour
         Vector3 rotationOffset = mainCamera.transform.TransformDirection(StickDirection);
         rotationOffset.y = 0; //solo queremos los movimientos laterales.
         //smooth rotation
-        model.forward += Vector3.Lerp(model.forward, rotationOffset, Time.deltaTime * rotationSpeed);
+        //model.forward += Vector3.Lerp(model.forward, rotationOffset, Time.deltaTime * rotationSpeed);
     }
 
     private void HandleTargetLockedLocomotionRotation()
