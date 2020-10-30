@@ -11,12 +11,17 @@ public class Player : Agent
     #endregion
 
     #region VARIABLES
-
-    //private////////////
+    //movement and camera
+    float angle;
+    float targetAngle;
+    public CharacterController controller;
+    public float turnSmoothTime = 0.1f;
+    float turnSmoothVelocity;
+    public Transform cam;
+    //
     public actions currentAction;
     //Movement
     private Rigidbody playerBody;
-    Transform cam;
     InputManager myInput;
     bool isJumping;
     private int MAXLIFE = 6;
@@ -66,9 +71,23 @@ public class Player : Agent
     {
         if ((currentAction != actions.LIGHTATTACK) && (currentAction != actions.HEAVYATTACK) && (currentAction != actions.DASH))
         {
-            playerBody.velocity = new Vector3(myInput.inputVector.x * speed, playerBody.velocity.y, myInput.inputVector.z * speed);
+            ///////////////////////
+            Vector3 direction = myInput.inputVector.normalized;
+
+            if (direction.magnitude >= 0.1f)
+            {
+                targetAngle = Mathf.Atan2(direction.x, direction.z)* Mathf.Rad2Deg + cam.eulerAngles.y;
+                angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+                Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                controller.Move(moveDirection.normalized * speed * Time.deltaTime);
+            }
+
+            ///////////////////////
+            //playerBody.velocity = new Vector3(myInput.inputVector.x * speed, playerBody.velocity.y, myInput.inputVector.z * speed);
             //rotate
-            transform.LookAt(transform.position + new Vector3(myInput.inputVector.x, 0f, myInput.inputVector.z));
+            //transform.LookAt(transform.position + new Vector3(myInput.inputVector.x, 0f, myInput.inputVector.z));
             if (playerBody.velocity.magnitude > 2)
                 currentAction = actions.WALK;
             if (playerBody.velocity.magnitude > 2.9)
@@ -117,7 +136,7 @@ public class Player : Agent
     private void FixedUpdate()
     {
         //movement
-        //AddMovement();
+        AddMovement();
     }
 
     private void Update()
