@@ -18,8 +18,10 @@ public class ColliderEnemies : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-
-
+        if (other.tag == "Enemy")
+        {
+            enemies.Remove(other.gameObject);
+        }
     }
 
     #region GETENEMIES

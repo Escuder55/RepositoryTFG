@@ -35,7 +35,7 @@ public class PlayerHandlerCamera : MonoBehaviour
 
     //Coge el script que haya en este objeto (en este caso se encuentra en TargetLockedObject)
     [SerializeField] private CinemachineTargetGroup scriptTargetGroup;
-    public GameObject prueba;
+    //public GameObject prueba;
 
     //GameObjects front of player
     [Header("Enemies in front of camera")]
@@ -64,9 +64,13 @@ public class PlayerHandlerCamera : MonoBehaviour
         HandleInputData();
 
         //HANDLE ROTATION PARA MIRAR A DONDE SEÑALAMOS
-        if(isTargetLocked)
+        if (isTargetLocked)
         {
+            //FUNCION DE CAMARA FIJADA
             HandleTargetLockedLocomotionRotation();
+
+            //FUNCION DE CAMBIAR DE OBJETIVO
+            ChangeObjective();
         }
         else
         {
@@ -87,7 +91,7 @@ public class PlayerHandlerCamera : MonoBehaviour
         //aqui referenciamos la rotacion del enemigo
         //targetposition - currentposition = vector direction from currentposition to target position
         Vector3 rotationOffset = targetLock.transform.position - model.position;
-        rotationOffset.y = 0; 
+        rotationOffset.y = 0;
         //smooth rotation
         model.forward += Vector3.Lerp(model.forward, rotationOffset, Time.deltaTime * rotationSpeed);
     }
@@ -95,6 +99,8 @@ public class PlayerHandlerCamera : MonoBehaviour
     private void HandleInputData()
     {
         //USING KEYBOARD AND PRESSING A DIAGONAL DIRECTION YOU COULD REACH A MAGNITUDE OF 1.4 so we clamp it.
+
+        //VARIABLES VELOCIDAD
         anim.SetFloat("Speed", Vector3.ClampMagnitude(StickDirection, 1).magnitude);
         anim.SetFloat("Horizontal", StickDirection.x);
         anim.SetFloat("Vertical", StickDirection.z);
@@ -102,7 +108,7 @@ public class PlayerHandlerCamera : MonoBehaviour
         isTargetLocked = anim.GetBool("IsTargetLocked");
 
         //SOLO PODEMOS TARGETEAR EL ENEMIGO CUANDO ESTA EL ARMA EQUIPADA
-        if(Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             anim.SetBool("IsWeaponEquipped", !isWeaponEquipped);
             anim.SetBool("IsTargetLocked", !isTargetLocked);
@@ -115,8 +121,44 @@ public class PlayerHandlerCamera : MonoBehaviour
             //PRUEBA DE CAMBIO DE ENEMIGO
             //targetLockCinemachineCamera.LookAt = prueba.transform;
             //scriptTargetGroup.m_Targets[1].target = prueba.transform;
-
         }
+
     }
 
+    public void ChangeObjective()
+    {
+        //CHANGE ENEMY (RIGHT)
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                if (scriptTargetGroup.m_Targets[1].target.name == enemies[i].name)
+                {
+                    if(i < (enemies.Count - 1))
+                    {
+                        scriptTargetGroup.m_Targets[1].target = enemies[i+1].transform;
+                        targetLock = enemies[i + 1].transform;
+                        Debug.Log("Siguiente");
+                    }
+                }
+            }
+        }
+
+        //CHANGE ENEMY (LEFT)
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                if (scriptTargetGroup.m_Targets[1].target.name == enemies[i].name)
+                {
+                    if (i > 0)
+                    {
+                        scriptTargetGroup.m_Targets[1].target = enemies[i - 1].transform;
+                        targetLock = enemies[i - 1].transform;
+                        Debug.Log("Siguiente");
+                    }
+                }
+            }
+        }
+    }
 }
