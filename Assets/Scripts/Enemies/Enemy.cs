@@ -25,8 +25,14 @@ public class Enemy : Agent
 
     /////////ENEMY
     [Header("ENEMY")]
-    public float lifeThreshold = 30f;
-    public float distanceToRun;
+    [SerializeField] float lifeThreshold = 30f;
+    [SerializeField] float distanceToRun;
+    [SerializeField] float chargeForce = 10f;
+    [SerializeField] float chargeSpeed =1f;
+    [Header("ENEMY DAMAGE")]
+    [SerializeField] int attackDamage= 10;
+    [SerializeField] int chargeDamage = 20;
+
     NavMeshAgent agent;
     StateEnemy currentState;
     float maxLife;
@@ -51,6 +57,8 @@ public class Enemy : Agent
     public float timeToAttack = 5f;
     float countDownToAttack = 5f;
     AttackType currentAttack;
+
+    bool isCharging = false;
     #endregion
 
     #region START
@@ -79,7 +87,6 @@ public class Enemy : Agent
     #endregion
 
     #region UPDATE
-    //Para cada frame
     void Update()
     {
         distanceToRun = maxDistanceToPlayer * 0.5f;
@@ -244,17 +251,128 @@ public class Enemy : Agent
     {
         countDownToAttack -= Time.deltaTime;
         if (countDownToAttack <= 0f)
-        {
-            if (Vector3.Distance(this.transform.position, playerTransform.position) <= minDistanceToPoint * 3f)
+        {            
+            switch (currentState)
             {
-                Debug.Log("ATTACK!!");
-                countDownToAttack = timeToAttack;
-
-                Vector3 pushDirection = playerTransform.position - this.transform.position;
-                pushDirection.y += 2f;
-                playerTransform.DOMove(playerTransform.position + pushDirection, 0.3f);
-
+                case StateEnemy.SEEK:
+                    {
+                        //hacemos un random entre los dos tipos de ataque
+                        int rand = Random.Range(0,100);
+                        if (rand > lifeThreshold)
+                        {
+                            Debug.Log("RANDOM: "+ rand + "  LIGHT ATTACK" );
+                            Attack();
+                            break;
+                        }
+                        else
+                        {
+                            Debug.Log("RANDOM: " + rand + " CHARGE ATTACK");
+                            ChargeAttack();
+                            break;
+                        }
+                                               
+                    }
+                case StateEnemy.FLEE:
+                    {
+                        int rand = Random.Range(0, 100);
+                        //hacemos un random entre los dos tipos de ataque
+                        if (rand < lifeThreshold)
+                        {
+                            Debug.Log("RANDOM: " + rand + "  LIGHT ATTACK");
+                            Attack();
+                            break;
+                        }
+                        else
+                        {
+                            Debug.Log("RANDOM: " + rand + " FRONT ATTACK");
+                            ChargeAttack();
+                            break;
+                        }
+                    }
+                default:
+                    break;
             }
+
+            countDownToAttack = timeToAttack;
+        }
+    }
+    #endregion
+
+    #region ATTACK
+    void Attack()
+    {
+        if (Vector3.Distance(this.transform.position, playerTransform.position) <= minDistanceToPoint * 3f)
+        {
+            Debug.Log("LIGHT ATTACK!!");
+
+            PushPlayer();
+            CauseDamage(attackDamage);
+        }
+    }
+    #endregion
+
+    #region CHARGE ATTACK
+    void ChargeAttack()
+    {
+        if (Vector3.Distance(this.transform.position, playerTransform.position) <= minDistanceToPoint * 10f)
+        {
+            Vector3 pushDirection = Vector3.Normalize(playerTransform.position - this.transform.position);
+
+            this.transform.DOMove(playerTransform.position + pushDirection * chargeForce, chargeSpeed);
+            isCharging = true;
+
+            Invoke("RestartChargeAttack", chargeSpeed);
+        }
+    }
+    #endregion
+
+    #region RESTART CHARGE ATTACK
+    void RestartChargeAttack()
+    {
+        isCharging = false;
+    }
+    #endregion
+
+    #region PUSH PLAYER
+    void PushPlayer()
+    {
+        Vector3 pushDirection = playerTransform.position - this.transform.position;
+        pushDirection.y += 2f;
+        playerTransform.DOMove(playerTransform.position + pushDirection, 0.3f);
+
+
+    }
+    #endregion
+
+    #region GET LIFE
+    public int GetLife()
+    {
+        return this.life;
+    }
+    #endregion
+
+    #region CAUSE DAMAGE
+    public void CauseDamage(int _damage)
+    {
+        player.life -= _damage;
+    }
+    #endregion
+
+    #region GET HURT
+    public void GetHurt(int _damage)
+    {
+        this.life -= _damage;
+    }
+    #endregion
+
+    #region TRIGGER ENTER
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && isCharging)
+        {
+            PushPlayer();
+
+            CauseDamage(chargeDamage);
         }
     }
     #endregion
@@ -262,8 +380,8 @@ public class Enemy : Agent
     #region ON DRAW GIZMOS
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(this.transform.position, maxDistanceToPlayer);
-        Gizmos.DrawWireSphere(this.transform.position, distanceToRun);
+        //Gizmos.DrawWireSphere(this.transform.position, maxDistanceToPlayer);
+        //Gizmos.DrawWireSphere(this.transform.position, distanceToRun);
     }
     #endregion
 }
