@@ -24,23 +24,10 @@ public class rvMovementPers : MonoBehaviour
     public cameraScript myCam;
     private GameObject myPlayer;
     // Update is called once per frame
-    //Gun
-    [Header("GUN")]
-    public float damage = 10f;
-    public float bulletSpeed = 100;
-    public float CrystalSpeed = 80;
-    public Rigidbody bullet;
-    public Rigidbody crystal;
-    public Transform rightPistol;
-    public Transform leftPistol;
-    bool canShoot = true;
-    bool canShoot2 = true;
-    bool isDashing=false;
-    [SerializeField] float fireRate = 0.5f;
-    [SerializeField] float fireRate2 = 0.8f;
-    float timerToShoot, timerToShoot2;
 
     [Header("DASH")]
+
+    bool isDashing=false;
     float dashTimer = 0f;
     public float dashvelocity = 30;
     private Vector3 dashV;
@@ -61,8 +48,7 @@ public class rvMovementPers : MonoBehaviour
         dashCounter = timeToNextDash;
         currentHealth = maxHealth;
         myPlayer = GameObject.FindGameObjectWithTag("Player");
-        timerToShoot = fireRate;
-        timerToShoot2 = fireRate2;
+        
     }
 
     void Update()
@@ -111,14 +97,7 @@ public class rvMovementPers : MonoBehaviour
             
         }
 
-        if (Input.GetButtonDown("Fire1") && canShoot)
-        {
-            ShootNegative();
-        }
-        if (Input.GetButtonDown("Fire2") && canShoot2)
-        {
-            ShootPositive();
-        }
+        
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             Dash();
@@ -144,26 +123,7 @@ public class rvMovementPers : MonoBehaviour
                 isDashing = false;
             }
         }
-
-        if (!canShoot)
-        {
-            timerToShoot -= Time.fixedDeltaTime;
-            if (timerToShoot <= 0)
-            {
-                canShoot = true;
-                timerToShoot = fireRate;
-            }
-        }
-
-        if (!canShoot2)
-        {
-            timerToShoot2 -= Time.fixedDeltaTime;
-            if (timerToShoot2 <= 0)
-            {
-                canShoot2 = true;
-                timerToShoot2 = fireRate2;
-            }
-        }
+       
         if (!canDash)
         {
             dashCounter -= Time.fixedDeltaTime;
@@ -174,21 +134,7 @@ public class rvMovementPers : MonoBehaviour
             }
 
         }
-    }
-
-    void ShootNegative()
-    {
-        canShoot = false;
-        Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, rightPistol.transform.position, rightPistol.transform.rotation);
-        bulletClone.velocity = transform.forward * bulletSpeed;
-    }
-
-    void ShootPositive()
-    {
-        canShoot2 = false;
-        Rigidbody bulletClone2 = (Rigidbody)Instantiate(crystal, leftPistol.transform.position, leftPistol.transform.rotation);
-        bulletClone2.velocity = transform.forward * CrystalSpeed;
-    }
+    }  
 
     void Dash()
     {
@@ -201,23 +147,7 @@ public class rvMovementPers : MonoBehaviour
         }      
 
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag=="Slower")
-        {
-            isSlowed = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Slower")
-        {
-            isSlowed = false;
-        }
-    }
-
+    
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;

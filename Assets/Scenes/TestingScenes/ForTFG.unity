@@ -121,6 +121,33 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &80827433 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4268136557489507980, guid: 454a5ea228da8304aa66c279b9cfb863,
+    type: 3}
+  m_PrefabInstance: {fileID: 1724271081}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &80827434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80827433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e2fbfb569868c94693c47272700b3d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  bulletSpeed: 100
+  CrystalSpeed: 80
+  bullet: {fileID: 1485909891670066590, guid: 204f1c99847d1aa47b35b54a4fc56682, type: 3}
+  crystal: {fileID: 1485909891670066590, guid: 315d2624d57def247afe64b449a0da2b, type: 3}
+  rightPistol: {fileID: 1410281543}
+  leftPistol: {fileID: 1544153340}
+  fireRate: 0.5
+  fireRate2: 0.8
 --- !u!1 &436061335
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,6 +382,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1410281543 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4268136556867185106, guid: 454a5ea228da8304aa66c279b9cfb863,
+    type: 3}
+  m_PrefabInstance: {fileID: 1724271081}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1544153340 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4268136557616891632, guid: 454a5ea228da8304aa66c279b9cfb863,
+    type: 3}
+  m_PrefabInstance: {fileID: 1724271081}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1724271081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -447,6 +486,37 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1742384526}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1734574988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734574987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!114 &1734574991
 MonoBehaviour:
   m_ObjectHideFlags: 0
