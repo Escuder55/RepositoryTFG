@@ -12,9 +12,12 @@ public class cameraScript : MonoBehaviour
     
     public float smoothing = 5f;
     Vector3 offset;
+
+    Camera mainCamera;
     private void Start()
     {
         offset = transform.position - character.position;
+        mainCamera = GetComponent<Camera>();
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -22,7 +25,8 @@ public class cameraScript : MonoBehaviour
         //transform.LookAt(character);
         
         RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, 10000f))
         {
             myMouse = hit.point;
