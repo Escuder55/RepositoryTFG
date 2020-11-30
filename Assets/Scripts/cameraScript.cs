@@ -14,10 +14,18 @@ public class cameraScript : MonoBehaviour
     Vector3 offset;
 
     Camera mainCamera;
+
+    [SerializeField] Transform targetCamera;
+
     private void Start()
     {
         offset = transform.position - character.position;
         mainCamera = GetComponent<Camera>();
+    }
+
+    private void Update()
+    {
+        transform.LookAt(targetCamera.position);
     }
     // Update is called once per frame
     void FixedUpdate()
