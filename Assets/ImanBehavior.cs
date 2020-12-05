@@ -2,21 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum iman { POSITIVE,NEGATIVE, NONE};
+public enum mobilityType { MOBILE, STATIC, NONE };
+public enum iman { POSITIVE, NEGATIVE, NONE };
 public enum forceType { ATRACT, REPULSE, NONE };
 
 public class ImanBehavior : MonoBehaviour
 {
-    public iman myPole= iman.NONE;
+    [Header("ELEMENT TYPE")]
+    public mobilityType mobility = mobilityType.NONE;
+    public iman myPole = iman.NONE;
     public LayerMask whatCanBeImanted;
     private Rigidbody myRB;
-    [SerializeField] float radius=25;
-    bool applyForce=false;
+    [Header("FORCES")]
+    [SerializeField] float radius = 25;
+    [SerializeField] float force = 1;
+    bool applyForce = false;
     Vector3 directionForce;
-    [SerializeField]float force=1;
     Collider[] others;
     GameObject other;
-    forceType myForceType= forceType.NONE;
+    forceType myForceType = forceType.NONE;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,14 +47,14 @@ public class ImanBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (applyForce)
+        if (applyForce && mobility == mobilityType.MOBILE)
         {
             directionForce = CalculateVectorAB(this.transform.position, other.transform.position);
             if (myForceType == forceType.REPULSE)
             {
                 directionForce *= -1;
             }
-            myRB.AddForce(directionForce* force,ForceMode.Acceleration);
+            myRB.AddForce(directionForce * force, ForceMode.Acceleration);
         }
     }
 
@@ -61,7 +66,7 @@ public class ImanBehavior : MonoBehaviour
         {
             CheckOthers();
         }
-    }    
+    }
 
     public void AddNegative()
     {
@@ -84,7 +89,7 @@ public class ImanBehavior : MonoBehaviour
         {
             if (other.GetComponent<ImanBehavior>().myPole != iman.NONE)
             {
-                if (other.GetComponent<ImanBehavior>().myPole == myPole)                
+                if (other.GetComponent<ImanBehavior>().myPole == myPole)
                     myForceType = forceType.REPULSE;
                 else
                     myForceType = forceType.ATRACT;
@@ -93,7 +98,7 @@ public class ImanBehavior : MonoBehaviour
                 applyForce = true;
                 //this.gameObject.layer = LayerMask.NameToLayer("Default");
             }
-        }        
+        }
     }
 
     void CleanOthers()
@@ -119,7 +124,7 @@ public class ImanBehavior : MonoBehaviour
 
     private Vector3 CalculateVectorAB(Vector3 A, Vector3 B)
     {
-        Vector3 result= new Vector3(B.x-A.x, B.y - A.y, B.z - A.z);
+        Vector3 result = new Vector3(B.x - A.x, B.y - A.y, B.z - A.z);
         return result.normalized;
     }
 
@@ -130,5 +135,5 @@ public class ImanBehavior : MonoBehaviour
         other = null;
         others = null;
     }
-    
+
 }
