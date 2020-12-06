@@ -24,8 +24,7 @@ public class BulletScript : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
-        
+    {        
         if (other.tag == "CanBeHitted")
         {
             other.GetComponent<ImanBehavior>().AddCharge(iman.NEGATIVE,numCharge);
