@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    float BulletDamage = 5;
+    int numCharge = 1;
     public float distanceCanReach=40;
     Vector3 initialPosition;
 
@@ -25,9 +25,10 @@ public class BulletScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
         if (other.tag == "CanBeHitted")
         {
-            other.GetComponent<ImanBehavior>().AddNegative();
+            other.GetComponent<ImanBehavior>().AddCharge(iman.NEGATIVE,numCharge);
             Die();
         }
     }

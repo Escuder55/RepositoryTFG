@@ -8,36 +8,45 @@ public enum forceType { ATRACT, REPULSE, NONE };
 
 public class ImanBehavior : MonoBehaviour
 {
+    [SerializeField]private List<GameObject> nearImantableObjects;
+
+    [Header("CHECKING CHARGES")]
+    SphereCollider mysphereCollider;
+    float oneCharge, twoCharge, ThreeCharge;
     [Header("ELEMENT TYPE")]
     public mobilityType mobility = mobilityType.NONE;
     public iman myPole = iman.NONE;
     public LayerMask whatCanBeImanted;
     private Rigidbody myRB;
+
     [Header("FORCES")]
     [SerializeField] float radius = 25;
     [SerializeField] float force = 1;
     bool applyForce = false;
     Vector3 directionForce;
     Collider[] others;
-    GameObject other;
+    GameObject otherGO;
     forceType myForceType = forceType.NONE;
 
     // Start is called before the first frame update
     void Start()
     {
         myRB = this.GetComponent<Rigidbody>();
+        mysphereCollider = this.GetComponent<SphereCollider>();
+        mysphereCollider.radius = 0.5f;
+        nearImantableObjects = new List<GameObject>();
     }
 
     private void Update()
     {
         if (applyForce)
         {
-            if (Vector3.Distance(other.transform.position, this.transform.position) > 20)
+            if (Vector3.Distance(otherGO.transform.position, this.transform.position) > 20)
             {
                 ResetObject();
                 Debug.Log("Mu lejos");
             }
-            else if (Vector3.Distance(other.transform.position, this.transform.position) < 3f)
+            else if (Vector3.Distance(otherGO.transform.position, this.transform.position) < 3f)
             {
                 ResetObject();
                 Debug.Log("Mu cerca");
@@ -49,7 +58,7 @@ public class ImanBehavior : MonoBehaviour
     {
         if (applyForce && mobility == mobilityType.MOBILE)
         {
-            directionForce = CalculateVectorAB(this.transform.position, other.transform.position);
+            directionForce = CalculateVectorAB(this.transform.position, otherGO.transform.position);
             if (myForceType == forceType.REPULSE)
             {
                 directionForce *= -1;
@@ -57,18 +66,72 @@ public class ImanBehavior : MonoBehaviour
             myRB.AddForce(directionForce * force, ForceMode.Acceleration);
         }
     }
-
-    public void AddPositive()
+    ///New technique////////
+    #region UPDATING ELEMENTS NEAR
+    private void OnTriggerEnter(Collider other)
     {
-        myPole = iman.POSITIVE;
-
-        if (Physics.CheckSphere(transform.position, radius, whatCanBeImanted))
+        if (myPole!=iman.NONE)
         {
-            CheckOthers();
+            if ((other.gameObject.layer == 10) && other.gameObject != this.gameObject)
+            {               
+               nearImantableObjects.Add(other.gameObject);
+            }
         }
     }
 
-    public void AddNegative()
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == 10)
+        {
+            nearImantableObjects.Remove(other.gameObject);
+        }
+    }
+    #endregion
+
+    void CalculateDirectionForce()
+    {
+        foreach (GameObject obj in nearImantableObjects)
+        {
+            if (obj.GetComponent<ImanBehavior>().myPole == iman.POSITIVE)
+                directionForce += CalculateVectorAB(this.transform.position, obj.transform.position);
+            else if (obj.GetComponent<ImanBehavior>().myPole == iman.NEGATIVE)
+                directionForce += CalculateVectorAB(obj.transform.position, this.transform.position);
+
+        }
+    }
+
+    public void AddCharge(iman typeIman, int numCharge)
+    {
+        //Primero asignamos polo para que no haya problemas en otra parte del codigo
+        if (typeIman == iman.POSITIVE)
+            myPole = iman.POSITIVE;
+        else
+            myPole = iman.NEGATIVE;
+
+        switch (numCharge)
+        {
+            case 1:
+                mysphereCollider.enabled = true;
+                mysphereCollider.radius = 5;
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+
+        
+
+        if (Physics.CheckSphere(transform.position, radius, whatCanBeImanted))
+        {
+            //CheckOthers();
+        }
+    }
+    
+    ///Oldtechinque
+    public void AddNegative(int numCharge)
     {
         //cambiamos polo
         myPole = iman.NEGATIVE;
@@ -85,16 +148,16 @@ public class ImanBehavior : MonoBehaviour
         others = Physics.OverlapSphere(transform.position, radius, whatCanBeImanted);
 
         CleanOthers();
-        if (other != null)
+        if (otherGO != null)
         {
-            if (other.GetComponent<ImanBehavior>().myPole != iman.NONE)
+            if (otherGO.GetComponent<ImanBehavior>().myPole != iman.NONE)
             {
-                if (other.GetComponent<ImanBehavior>().myPole == myPole)
+                if (otherGO.GetComponent<ImanBehavior>().myPole == myPole)
                     myForceType = forceType.REPULSE;
                 else
                     myForceType = forceType.ATRACT;
 
-                other.GetComponent<ImanBehavior>().AnotherFound(this.gameObject, myPole);
+                otherGO.GetComponent<ImanBehavior>().AnotherFound(this.gameObject, myPole);
                 applyForce = true;
                 //this.gameObject.layer = LayerMask.NameToLayer("Default");
             }
@@ -107,7 +170,7 @@ public class ImanBehavior : MonoBehaviour
         {
             if (others[i].gameObject != this.gameObject)
             {
-                other = others[i].gameObject;
+                otherGO = others[i].gameObject;
             }
         }
     }
@@ -132,7 +195,7 @@ public class ImanBehavior : MonoBehaviour
     {
         myPole = iman.NONE;
         applyForce = false;
-        other = null;
+        otherGO = null;
         others = null;
     }
 

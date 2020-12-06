@@ -6,7 +6,7 @@ public class CrystalScript : MonoBehaviour
 {
     Vector3 initialPosition;
     public float distanceCanReach = 40;
-
+    int numCharge=1;
     private void Start()
     {
         initialPosition = this.transform.position;
@@ -23,7 +23,7 @@ public class CrystalScript : MonoBehaviour
     {
          if (other.tag == "CanBeHitted")
         {
-            other.GetComponent<ImanBehavior>().AddPositive();
+            other.GetComponent<ImanBehavior>().AddCharge(iman.POSITIVE, numCharge);
             Die();
         }
     }
