@@ -59,6 +59,14 @@ public class Enemy : Agent
     AttackType currentAttack;
 
     bool isCharging = false;
+
+    /////////KNOCBACK   
+    private NavMeshAgent nma = null;
+    private Rigidbody rb;
+    public float knockbackForce = 10.0f;
+    public Vector3 knockbackDirection;
+
+    public bool applyKnockBack;
     #endregion
 
     #region START
@@ -81,6 +89,10 @@ public class Enemy : Agent
             playerTransform = auxPlayer.transform;
             playerRB = auxPlayer.GetComponent<Rigidbody>();
         }
+
+        ////NAVMESH AGENT KNOCKBACK
+        nma = GetComponentInParent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
 
         countDownToAttack = timeToAttack;
     }
@@ -138,6 +150,12 @@ public class Enemy : Agent
                 {
                     break;
                 }
+        }
+
+        if (applyKnockBack)
+        {
+            StartCoroutine(KnockBackCo());
+            applyKnockBack = false;
         }
     }
     #endregion
@@ -384,4 +402,32 @@ public class Enemy : Agent
         //Gizmos.DrawWireSphere(this.transform.position, distanceToRun);
     }
     #endregion
+
+    #region ONCOLLISIONENTER
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Spikes")
+        {
+            GetHurt(10);
+            knockbackDirection = (agent.transform.position - col.transform.position).normalized;
+            StartCoroutine(KnockBackCo());
+        }
+    }
+    #endregion
+
+    #region COURUTINE KNOCBACK
+    IEnumerator KnockBackCo()
+    {
+        nma.enabled = false;
+        rb.isKinematic = false;
+
+        rb.velocity = knockbackDirection * knockbackForce;
+
+        yield return new WaitForSeconds(0.5f);
+
+        nma.enabled = true;
+        rb.isKinematic = true;
+    }
+    #endregion
+
 }
