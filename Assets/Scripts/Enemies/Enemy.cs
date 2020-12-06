@@ -63,7 +63,7 @@ public class Enemy : Agent
     /////////KNOCBACK   
     private NavMeshAgent nma = null;
     private Rigidbody rb;
-    public float knockbackForce = 10.0f;
+    public float knockbackForce = 5.0f;
     public Vector3 knockbackDirection;
 
     public bool applyKnockBack;
@@ -421,6 +421,9 @@ public class Enemy : Agent
         nma.enabled = false;
         rb.isKinematic = false;
 
+        knockbackDirection.y = 0.5f;
+
+        //agent.velocity = knockbackDirection * knockbackForce;
         rb.velocity = knockbackDirection * knockbackForce;
 
         yield return new WaitForSeconds(0.5f);

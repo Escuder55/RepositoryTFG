@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\Animations\CancelHit2.cs" />
     <Compile Include="Assets\Scripts\Animations\CancelHit3.cs" />
     <Compile Include="Assets\Scripts\Animations\IdleBehaviour.cs" />
+    <Compile Include="Assets\Scripts\BigDoor.cs" />
     <Compile Include="Assets\Scripts\Camera\PlayerHandlerCamera.cs" />
     <Compile Include="Assets\Scripts\Character\BulletScript.cs" />
     <Compile Include="Assets\Scripts\Character\CrystalScript.cs" />
