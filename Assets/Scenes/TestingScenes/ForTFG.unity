@@ -150,17 +150,17 @@ PrefabInstance:
     - target: {fileID: 6379823956768371376, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 6379823956768371376, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.1198
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6379823956768371376, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6379823956768371376, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
@@ -210,6 +210,16 @@ PrefabInstance:
     - target: {fileID: 6379823956768371379, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6379823956768371380, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
+        type: 3}
+      propertyPath: m_Mass
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6379823956768371380, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
+        type: 3}
+      propertyPath: m_Drag
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6379823956768371381, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
@@ -353,12 +363,12 @@ PrefabInstance:
     - target: {fileID: 6379823956768371376, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 6379823956768371376, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.1198
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6379823956768371376, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
@@ -423,12 +433,12 @@ PrefabInstance:
     - target: {fileID: 6379823956768371380, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
       propertyPath: m_Mass
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6379823956768371380, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
       propertyPath: m_Drag
-      value: 13
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6379823956768371381, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
@@ -664,6 +674,11 @@ PrefabInstance:
       propertyPath: m_WorldUpOverride
       value: 
       objectReference: {fileID: 847155961}
+    - target: {fileID: 4559963893853824333, guid: e1e6299cc9a776248a836cd3daf63a9b,
+        type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 4559963893853824335, guid: e1e6299cc9a776248a836cd3daf63a9b,
         type: 3}
       propertyPath: m_Name
@@ -819,17 +834,17 @@ PrefabInstance:
     - target: {fileID: 6379823956768371376, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6379823956768371376, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.1198
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6379823956768371376, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.508154
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6379823956768371376, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
@@ -884,12 +899,12 @@ PrefabInstance:
     - target: {fileID: 6379823956768371380, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
       propertyPath: m_Mass
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6379823956768371380, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
       propertyPath: m_Drag
-      value: 13
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6379823956768371381, guid: abafd5c5e2b7a3146b7f367b0ae4cf90,
         type: 3}
