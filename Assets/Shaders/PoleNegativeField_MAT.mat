@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PoleNegativeField_MAT
+  m_Shader: {fileID: -6465566751694194690, guid: a0902f89ff94ee741b4b46c66e75832f,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_41E6F74E:
+        m_Texture: {fileID: 2800000, guid: fbdb3bdee4b2615478340b112307dcaa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_44A89502: 0.15
+    - Vector1_89BAEBEC: 1.7
+    - Vector1_96261C4: 0.05
+    - Vector1_AEE1F4C2: 0.17
+    m_Colors:
+    - Color_5CDE0A77: {r: 0.5943987, g: 0, b: 0.01783196, a: 0}
+    - Vector2_1A8696A3: {r: 2, g: 2, b: 0, a: 0}

@@ -77,6 +77,7 @@
     <Compile Include="Assets\Scripts\Animations\CancelHit2.cs" />
     <Compile Include="Assets\Scripts\Animations\CancelHit3.cs" />
     <Compile Include="Assets\Scripts\Animations\IdleBehaviour.cs" />
+    <Compile Include="Assets\Scripts\BigDoor.cs" />
     <Compile Include="Assets\Scripts\Camera\PlayerHandlerCamera.cs" />
     <Compile Include="Assets\Scripts\Character\BulletScript.cs" />
     <Compile Include="Assets\Scripts\Character\CrystalScript.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Assets\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
+    <Compile Include="Assets\Scripts\Spikes.cs" />
     <Compile Include="Assets\Scripts\Weapons.cs" />
     <Compile Include="Assets\Scripts\cameraScript.cs" />
     <Compile Include="Assets\ShootingScript.cs" />
