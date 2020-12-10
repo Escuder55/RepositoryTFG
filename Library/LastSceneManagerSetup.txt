@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/TestingScenes/TrapsTest.unity
+- path: Assets/Scenes/TestingScenes/IsometricTest.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
