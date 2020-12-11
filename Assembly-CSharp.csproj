@@ -62,34 +62,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CameraTransition.cs" />
-    <Compile Include="Assets\FollowCharacter.cs" />
-    <Compile Include="Assets\ImanBehavior.cs" />
-    <Compile Include="Assets\MartiCamera\Knight\scripts\rotator.cs" />
-    <Compile Include="Assets\MartiCamera\Mixamo\Melee Axe Pack\Demo\CameraScroll.cs" />
-    <Compile Include="Assets\Prefabs\LightRays2D\Script\LightRays2D.cs" />
-    <Compile Include="Assets\Prefabs\LightRays2D\Script\LightRays2DAbstract.cs" />
-    <Compile Include="Assets\Prefabs\LightRays2D\Script\LightRays2DCanvas.cs" />
     <Compile Include="Assets\Scripts\Agent.cs" />
-    <Compile Include="Assets\Scripts\Animations\AnimationController.cs" />
-    <Compile Include="Assets\Scripts\Animations\CancelHeavy.cs" />
-    <Compile Include="Assets\Scripts\Animations\CancelHit1.cs" />
-    <Compile Include="Assets\Scripts\Animations\CancelHit2.cs" />
-    <Compile Include="Assets\Scripts\Animations\CancelHit3.cs" />
     <Compile Include="Assets\Scripts\Animations\IdleBehaviour.cs" />
     <Compile Include="Assets\Scripts\BigDoor.cs" />
-    <Compile Include="Assets\Scripts\Camera\PlayerHandlerCamera.cs" />
-    <Compile Include="Assets\Scripts\Character\BulletScript.cs" />
-    <Compile Include="Assets\Scripts\Character\CrystalScript.cs" />
     <Compile Include="Assets\Scripts\Character\rotateToCam.cs" />
     <Compile Include="Assets\Scripts\Character\rvMovementPers.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />
-    <Compile Include="Assets\Scripts\Interactives\Chest.cs" />
-    <Compile Include="Assets\Scripts\Interactives\Dialogue\Dialogue.cs" />
     <Compile Include="Assets\Scripts\Interactives\Dialogue\DialogueManager.cs" />
-    <Compile Include="Assets\Scripts\Interactives\Dialogue\DialogueTrigger.cs" />
-    <Compile Include="Assets\Scripts\Interactives\Door.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\PauseMenu.cs" />
@@ -730,12 +710,7 @@
       <HintPath>E:/UNI/TFG/PROYECTO/RepositoryTFG/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{94384D64-0877-56DC-42CA-039BD71E1660}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup></ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
