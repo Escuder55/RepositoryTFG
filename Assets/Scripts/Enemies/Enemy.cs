@@ -54,6 +54,9 @@ public class Enemy : Agent
 
     /////////ATTACK
     [Header("ATTACK")]
+    public GameObject bullet;
+    public GameObject areaAttack;
+    public float areaAtkLife = 0.3f;
     public float timeToAttack = 5f;
     float countDownToAttack = 5f;
     AttackType currentAttack;
@@ -63,9 +66,9 @@ public class Enemy : Agent
     /////////KNOCBACK   
     private NavMeshAgent nma = null;
     private Rigidbody rb;
+    [Header("KNOCBACK")]
     public float knockbackForce = 5.0f;
     public Vector3 knockbackDirection;
-
     public bool applyKnockBack;
     #endregion
 
@@ -160,7 +163,9 @@ public class Enemy : Agent
     }
     #endregion
 
-    #region  CHECK CHANGE STATE
+
+    #region PATROL METHODS
+        #region  CHECK CHANGE STATE
     void CheckChangeState()
     {
         switch (currentState)
@@ -254,7 +259,7 @@ public class Enemy : Agent
     }
     #endregion
 
-    #region UPDATE PATROL POINT
+        #region UPDATE PATROL POINT
     void UpdatePatrolPoint()
     {
         //buscar un siguiente punto
@@ -263,123 +268,151 @@ public class Enemy : Agent
         agent.SetDestination(patrolPoints[currentPoint].position);
     }
     #endregion
-
-    #region HANDLE ATTACK
-    void HandleAttack()
-    {
-        countDownToAttack -= Time.deltaTime;
-        if (countDownToAttack <= 0f)
-        {            
-            switch (currentState)
-            {
-                case StateEnemy.SEEK:
-                    {
-                        //hacemos un random entre los dos tipos de ataque
-                        int rand = Random.Range(0,100);
-                        if (rand > lifeThreshold)
-                        {
-                            Debug.Log("RANDOM: "+ rand + "  LIGHT ATTACK" );
-                            Attack();
-                            break;
-                        }
-                        else
-                        {
-                            Debug.Log("RANDOM: " + rand + " CHARGE ATTACK");
-                            ChargeAttack();
-                            break;
-                        }
-                                               
-                    }
-                case StateEnemy.FLEE:
-                    {
-                        int rand = Random.Range(0, 100);
-                        //hacemos un random entre los dos tipos de ataque
-                        if (rand < lifeThreshold)
-                        {
-                            Debug.Log("RANDOM: " + rand + "  LIGHT ATTACK");
-                            Attack();
-                            break;
-                        }
-                        else
-                        {
-                            Debug.Log("RANDOM: " + rand + " FRONT ATTACK");
-                            ChargeAttack();
-                            break;
-                        }
-                    }
-                default:
-                    break;
-            }
-
-            countDownToAttack = timeToAttack;
-        }
-    }
     #endregion
 
-    #region ATTACK
-    void Attack()
-    {
-        if (Vector3.Distance(this.transform.position, playerTransform.position) <= minDistanceToPoint * 3f)
+    #region ATTACK METHODS
+
+        #region HANDLE ATTACK
+        void HandleAttack()
+        {
+            countDownToAttack -= Time.deltaTime;
+            if (countDownToAttack <= 0f)
+            {
+                switch (currentState)
+                {
+                    case StateEnemy.SEEK:
+                        {
+                            //hacemos un random entre los dos tipos de ataque
+                            int rand = Random.Range(0, 100);
+                            if (rand > lifeThreshold)
+                            {
+                                Debug.Log("RANDOM: " + rand + "  LIGHT ATTACK");
+                                Attack();
+                                break;
+                            }
+                            else
+                            {
+                                Debug.Log("RANDOM: " + rand + " CHARGE ATTACK");
+                                AreaAttack();
+                                //ChargeAttack();
+                                break;
+                            }
+
+                        }
+                    case StateEnemy.FLEE:
+                        {
+                            int rand = Random.Range(0, 100);
+                            //hacemos un random entre los dos tipos de ataque
+                            if (rand < lifeThreshold)
+                            {
+                                Debug.Log("RANDOM: " + rand + "  LIGHT ATTACK");
+                                Attack();
+                                break;
+                            }
+                            else
+                            {
+                                Debug.Log("RANDOM: " + rand + " FRONT ATTACK");
+                                AreaAttack();
+                                //ChargeAttack();
+                            break;
+                            }
+                        }
+                    default:
+                        break;
+                }
+
+                countDownToAttack = timeToAttack;
+            }
+        }
+        #endregion
+
+        #region ATTACK
+        void Attack()
+        {
+            Instantiate(bullet, this.transform.position, this.transform.rotation);
+
+        //Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, rightPistol.transform.position, rightPistol.transform.rotation);
+        //bulletClone.velocity = transform.forward * bulletSpeed;
+
+
+        /*if (Vector3.Distance(this.transform.position, playerTransform.position) <= minDistanceToPoint * 3f)
         {
             Debug.Log("LIGHT ATTACK!!");
 
             PushPlayer();
             CauseDamage(attackDamage);
+        }*/
         }
-    }
     #endregion
 
-    #region CHARGE ATTACK
-    void ChargeAttack()
-    {
-        if (Vector3.Distance(this.transform.position, playerTransform.position) <= minDistanceToPoint * 10f)
+        #region AREA ATTACK
+        void AreaAttack()
         {
-            Vector3 pushDirection = Vector3.Normalize(playerTransform.position - this.transform.position);
-
-            this.transform.DOMove(playerTransform.position + pushDirection * chargeForce, chargeSpeed);
-            isCharging = true;
-
-            Invoke("RestartChargeAttack", chargeSpeed);
+            areaAttack.SetActive(true);
+            Invoke("DeactivateAreaAttack", areaAtkLife);
         }
-    }
+        #endregion
+
+        #region DEACTIVATE AREA ATTACK
+        void DeactivateAreaAttack()
+        {
+            areaAttack.SetActive(false);
+        }
+        #endregion
+
+        #region CHARGE ATTACK
+        void ChargeAttack()
+        {
+            if (Vector3.Distance(this.transform.position, playerTransform.position) <= minDistanceToPoint * 10f)
+            {
+                Vector3 pushDirection = Vector3.Normalize(playerTransform.position - this.transform.position);
+
+                this.transform.DOMove(playerTransform.position + pushDirection * chargeForce, chargeSpeed);
+                isCharging = true;
+
+                Invoke("RestartChargeAttack", chargeSpeed);
+            }
+        }
+        #endregion
+
+        #region RESTART CHARGE ATTACK
+        void RestartChargeAttack()
+        {
+            isCharging = false;
+        }
+        #endregion
+
+        #region PUSH PLAYER
+        void PushPlayer()
+        {
+            Vector3 pushDirection = playerTransform.position - this.transform.position;
+            pushDirection.y += 2f;
+            playerTransform.DOMove(playerTransform.position + pushDirection, 0.3f);
+        }
+        #endregion    
+
+        #region CAUSE DAMAGE
+        public void CauseDamage(int _damage)
+        {
+            player.life -= _damage;
+        }
+        #endregion
+
+        #region GET HURT
+        public void GetHurt(int _damage)
+        {
+            this.life -= _damage;
+        }
+        #endregion
+
     #endregion
 
-    #region RESTART CHARGE ATTACK
-    void RestartChargeAttack()
-    {
-        isCharging = false;
-    }
-    #endregion
 
-    #region PUSH PLAYER
-    void PushPlayer()
-    {
-        Vector3 pushDirection = playerTransform.position - this.transform.position;
-        pushDirection.y += 2f;
-        playerTransform.DOMove(playerTransform.position + pushDirection, 0.3f);
-
-
-    }
-    #endregion
 
     #region GET LIFE
     public int GetLife()
     {
         return this.life;
-    }
-    #endregion
-
-    #region CAUSE DAMAGE
-    public void CauseDamage(int _damage)
-    {
-        player.life -= _damage;
-    }
-    #endregion
-
-    #region GET HURT
-    public void GetHurt(int _damage)
-    {
-        this.life -= _damage;
     }
     #endregion
 
@@ -398,8 +431,8 @@ public class Enemy : Agent
     #region ON DRAW GIZMOS
     private void OnDrawGizmos()
     {
-        //Gizmos.DrawWireSphere(this.transform.position, maxDistanceToPlayer);
-        //Gizmos.DrawWireSphere(this.transform.position, distanceToRun);
+        Gizmos.DrawWireSphere(this.transform.position, maxDistanceToPlayer);
+        Gizmos.DrawWireSphere(this.transform.position, distanceToRun);
     }
     #endregion
 

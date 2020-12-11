@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - CanBeHitted
   - Spikes
+  - Obstacle
   layers:
   - Default
   - TransparentFX

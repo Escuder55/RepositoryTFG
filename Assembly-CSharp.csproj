@@ -62,23 +62,39 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\EnemyBullet.cs" />
     <Compile Include="Assets\Scripts\Agent.cs" />
+    <Compile Include="Assets\Scripts\Animations\AnimationController.cs" />
+    <Compile Include="Assets\Scripts\Animations\CancelHeavy.cs" />
+    <Compile Include="Assets\Scripts\Animations\CancelHit1.cs" />
+    <Compile Include="Assets\Scripts\Animations\CancelHit2.cs" />
+    <Compile Include="Assets\Scripts\Animations\CancelHit3.cs" />
     <Compile Include="Assets\Scripts\Animations\IdleBehaviour.cs" />
     <Compile Include="Assets\Scripts\BigDoor.cs" />
+    <Compile Include="Assets\Scripts\Camera\PlayerHandlerCamera.cs" />
+    <Compile Include="Assets\Scripts\CameraTransition.cs" />
+    <Compile Include="Assets\Scripts\Character\BulletScript.cs" />
+    <Compile Include="Assets\Scripts\Character\CrystalScript.cs" />
     <Compile Include="Assets\Scripts\Character\rotateToCam.cs" />
     <Compile Include="Assets\Scripts\Character\rvMovementPers.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
+    <Compile Include="Assets\Scripts\FollowCharacter.cs" />
+    <Compile Include="Assets\Scripts\ImanBehavior.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />
+    <Compile Include="Assets\Scripts\Interactives\Chest.cs" />
+    <Compile Include="Assets\Scripts\Interactives\Dialogue\Dialogue.cs" />
     <Compile Include="Assets\Scripts\Interactives\Dialogue\DialogueManager.cs" />
+    <Compile Include="Assets\Scripts\Interactives\Dialogue\DialogueTrigger.cs" />
+    <Compile Include="Assets\Scripts\Interactives\Door.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\ShootingScript.cs" />
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\Scripts\Spikes.cs" />
     <Compile Include="Assets\Scripts\Weapons.cs" />
     <Compile Include="Assets\Scripts\cameraScript.cs" />
-    <Compile Include="Assets\ShootingScript.cs" />
     <None Include="Assets\Stuff\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\Stuff\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\Stuff\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

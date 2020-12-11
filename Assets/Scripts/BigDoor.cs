@@ -21,8 +21,8 @@ public class BigDoor : MonoBehaviour
         //SI ES IMANTADO
         if(Input.GetKeyDown(KeyCode.R))
         {
-            pivotDoor1.LeanRotate(new Vector3(0, -90, 0), time);
-            pivotDoor2.LeanRotate(new Vector3(0, 90, 0), time);
+            //pivotDoor1.LeanRotate(new Vector3(0, -90, 0), time);
+            //pivotDoor2.LeanRotate(new Vector3(0, 90, 0), time);
         }
     }
 }
