@@ -67,16 +67,9 @@
     <Compile Include="Assets\Scripts\Agent.cs" />
     <Compile Include="Assets\Scripts\Animations\IdleBehaviour.cs" />
     <Compile Include="Assets\Scripts\BigDoor.cs" />
-    <Compile Include="Assets\Scripts\CameraTransition.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
-    <Compile Include="Assets\Scripts\FollowCharacter.cs" />
-    <Compile Include="Assets\Scripts\ImanBehavior.cs" />
-    <Compile Include="Assets\Scripts\InputManager.cs" />
     <Compile Include="Assets\Scripts\Interactives\Dialogue\DialogueManager.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
-    <Compile Include="Assets\Scripts\MainMenu.cs" />
-    <Compile Include="Assets\Scripts\PauseMenu.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\ShootingScript.cs" />
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\Scripts\Spikes.cs" />
