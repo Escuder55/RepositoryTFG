@@ -39,8 +39,8 @@ public class rvMovementPers : MonoBehaviour
     float dashCounter;
     //other
     [Header("other")]
-    float currentHealth = 100;
-    float maxHealth = 100;
+    private int currentHealth = 100;
+    private int maxHealth = 100;
     bool onLiquidSlower = false;
 
     private void Start()
@@ -148,7 +148,7 @@ public class rvMovementPers : MonoBehaviour
 
     }
     
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)
@@ -161,5 +161,10 @@ public class rvMovementPers : MonoBehaviour
     {
         //pause game with score and gfgo main menu
         dead = true;
+    }
+
+    public int GetLife()
+    {
+        return currentHealth;
     }
 }
