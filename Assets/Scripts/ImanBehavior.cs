@@ -8,132 +8,195 @@ public enum forceType { ATRACT, REPULSE, NONE };
 
 public class ImanBehavior : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> nearImantableObjects;
+
+    [Header("CHECKING CHARGES")]
+    SphereCollider mysphereCollider;
     [Header("ELEMENT TYPE")]
     public mobilityType mobility = mobilityType.NONE;
     public iman myPole = iman.NONE;
     public LayerMask whatCanBeImanted;
     private Rigidbody myRB;
+
     [Header("FORCES")]
-    [SerializeField] float radius = 25;
-    [SerializeField] float force = 1;
+    [SerializeField] float force = 10;
+    [SerializeField] float timerImanted = 8f;
+    [SerializeField] float timerActive = 3f;
+    [SerializeField] float timeImanted = 8f;
+    [SerializeField] float timeActive = 3f;
     bool applyForce = false;
     Vector3 directionForce;
     Collider[] others;
-    GameObject other;
+    GameObject otherGO;
     forceType myForceType = forceType.NONE;
-
+    int numChargesAdded = 0;
     // Start is called before the first frame update
     void Start()
     {
         myRB = this.GetComponent<Rigidbody>();
+        mysphereCollider = this.GetComponent<SphereCollider>();
+        mysphereCollider.radius = 0.5f;
+        nearImantableObjects = new List<GameObject>();
+        timerActive = timeActive;
+        timerImanted = timeImanted;
     }
 
     private void Update()
     {
-        if (applyForce)
-        {
-            if (Vector3.Distance(other.transform.position, this.transform.position) > 20)
-            {
-                ResetObject();
-                Debug.Log("Mu lejos");
-            }
-            else if (Vector3.Distance(other.transform.position, this.transform.position) < 3f)
-            {
-                ResetObject();
-                Debug.Log("Mu cerca");
-            }
-        }
+        if (myPole != iman.NONE)
+            CalculateDirectionForce();
     }
 
     private void FixedUpdate()
-    {
-        if (applyForce && mobility == mobilityType.MOBILE)
+    {        
+        if (myPole != iman.NONE)
         {
-            directionForce = CalculateVectorAB(this.transform.position, other.transform.position);
-            if (myForceType == forceType.REPULSE)
+            if (applyForce)
             {
-                directionForce *= -1;
+                Debug.Log("ha de palicart la fuerza : " + directionForce * force);
+                myRB.AddForce(directionForce * force, ForceMode.Force);
+                directionForce = new Vector3(0, 0, 0);
+                timerActive -= Time.fixedDeltaTime;
+                if (timerActive <= 0)
+                    ResetObject();
             }
-            myRB.AddForce(directionForce * force, ForceMode.Acceleration);
-        }
-    }
-
-    public void AddPositive()
-    {
-        myPole = iman.POSITIVE;
-
-        if (Physics.CheckSphere(transform.position, radius, whatCanBeImanted))
-        {
-            CheckOthers();
-        }
-    }
-
-    public void AddNegative()
-    {
-        //cambiamos polo
-        myPole = iman.NEGATIVE;
-        //Hay alguno cerca que checkear?
-        if (Physics.CheckSphere(transform.position, radius, whatCanBeImanted))
-        {
-            CheckOthers();
+            else
+                timerImanted -= Time.fixedDeltaTime;
+            if (timerImanted <= 0)
+                ResetObject();
         }
 
     }
 
-    private void CheckOthers()
+    #region UPDATING ELEMENTS NEAR
+    private void OnTriggerEnter(Collider other)
     {
-        others = Physics.OverlapSphere(transform.position, radius, whatCanBeImanted);
-
-        CleanOthers();
-        if (other != null)
+        if (myPole != iman.NONE)
         {
-            if (other.GetComponent<ImanBehavior>().myPole != iman.NONE)
+            if ((other.gameObject.layer == 10) && other.gameObject != this.gameObject)
             {
-                if (other.GetComponent<ImanBehavior>().myPole == myPole)
-                    myForceType = forceType.REPULSE;
-                else
-                    myForceType = forceType.ATRACT;
-
-                other.GetComponent<ImanBehavior>().AnotherFound(this.gameObject, myPole);
-                applyForce = true;
-                //this.gameObject.layer = LayerMask.NameToLayer("Default");
+                if (!nearImantableObjects.Contains(other.gameObject))
+                {
+                    nearImantableObjects.Add(other.gameObject);
+                }
             }
         }
     }
 
-    void CleanOthers()
+    private void OnTriggerExit(Collider other)
     {
-        for (int i = 0; i < others.Length; i++)
+        if (other.gameObject.layer == 10)
         {
-            if (others[i].gameObject != this.gameObject)
-            {
-                other = others[i].gameObject;
-            }
+            nearImantableObjects.Remove(other.gameObject);
         }
     }
+    #endregion
 
-    public void AnotherFound(GameObject other, iman pole)
+    #region calculate Forces
+
+    void CalculateDirectionForce()
     {
-        if (pole == myPole)
-            myForceType = forceType.REPULSE;
-        else
-            myForceType = forceType.ATRACT;
-        //this.gameObject.layer = LayerMask.NameToLayer("Default");
-        applyForce = true;
+        bool hay = false;
+        foreach (GameObject obj in nearImantableObjects)
+        {
+            
+            //comprobamos q se tenga q calcular
+            if (obj.GetComponent<ImanBehavior>().myPole != iman.NONE)
+            {
+                if (obj.GetComponent<ImanBehavior>().myPole == myPole)
+                {
+                    //Repulsion
+                    directionForce += CalculateOneForce(this.gameObject, obj, forceType.REPULSE);
+                }
+                else if (obj.GetComponent<ImanBehavior>().myPole != myPole)
+                {
+                    //atraccion
+                    directionForce += CalculateOneForce(this.gameObject, obj, forceType.ATRACT);
+                }
+                hay = true;
+            }
+        }
+        if (hay)
+            applyForce = true;
+    }
+
+    private Vector3 CalculateOneForce(GameObject myGO, GameObject otherGO, forceType typeOfForce)
+    {
+        Vector3 finalForce = new Vector3(0, 0, 0);
+        //Suma de cargas
+        float numChargesSum = numChargesAdded + otherGO.GetComponent<ImanBehavior>().numChargesAdded;
+
+        switch (typeOfForce)
+        {
+            case forceType.ATRACT:
+                finalForce = CalculateVectorAB(myGO.transform.position, otherGO.transform.position);
+                break;
+            case forceType.REPULSE:
+                finalForce = CalculateVectorAB(otherGO.transform.position, myGO.transform.position);
+                break;
+            case forceType.NONE:
+                break;
+            default:
+                break;
+        }
+        float invertedDistance = (1f / finalForce.magnitude * numChargesSum * force);
+
+        finalForce = finalForce.normalized * invertedDistance;
+        //Debug.Log(finalForce);
+
+        return finalForce;
     }
 
     private Vector3 CalculateVectorAB(Vector3 A, Vector3 B)
     {
         Vector3 result = new Vector3(B.x - A.x, B.y - A.y, B.z - A.z);
-        return result.normalized;
+        return result;
+    }
+
+    #endregion
+
+    public void AddCharge(iman typeIman, int numCharge)
+    {
+        this.gameObject.tag = "Untagged";
+        //Primero asignamos polo para que no haya problemas en otra parte del codigo
+        if (typeIman == iman.POSITIVE)
+            myPole = iman.POSITIVE;
+        else
+            myPole = iman.NEGATIVE;
+
+        numChargesAdded = numCharge;
+
+        //En caso de tener los radius hardcoded aqui. SINO Cambiarlo a las dos lineas del switch
+        switch (numCharge)
+        {
+            case 1:
+                mysphereCollider.enabled = true;
+                mysphereCollider.radius = numCharge * 3.5f;
+                break;
+            case 2:
+                mysphereCollider.enabled = true;
+                mysphereCollider.radius = numCharge * 3.5f;
+                break;
+            case 3:
+                mysphereCollider.enabled = true;
+                mysphereCollider.radius = numCharge * 3.5f;
+                break;
+            default:
+                break;
+        }
+
     }
 
     private void ResetObject()
     {
+        this.gameObject.tag = "CanBeHitted";
+        nearImantableObjects.Clear();
         myPole = iman.NONE;
         applyForce = false;
-        other = null;
-        others = null;
+        timerActive = timeActive;
+        timerImanted = timeImanted;
+        mysphereCollider.radius = 0.5f;
+        mysphereCollider.enabled = false;
     }
 
 }

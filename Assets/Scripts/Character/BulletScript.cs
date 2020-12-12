@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    float BulletDamage = 5;
-    public float distanceCanReach=40;
+    int numCharge = 1;
+    public float distanceCanReach = 40;
     Vector3 initialPosition;
 
     private void Start()
@@ -15,19 +15,19 @@ public class BulletScript : MonoBehaviour
 
     private void Update()
     {
-        Vector3 distanceV = (this.transform.position - initialPosition);        
+        Vector3 distanceV = (this.transform.position - initialPosition);
         if (distanceV.magnitude >= distanceCanReach)
         {
             Die();
         }
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "CanBeHitted")
         {
-            other.GetComponent<ImanBehavior>().AddNegative();
+            other.GetComponent<ImanBehavior>().AddCharge(iman.NEGATIVE, numCharge);
             Die();
         }
     }
