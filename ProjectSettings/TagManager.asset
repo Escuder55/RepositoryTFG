@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - Enemy
   - CanBeHitted
+  - Spikes
+  - Obstacle
   layers:
   - Default
   - TransparentFX

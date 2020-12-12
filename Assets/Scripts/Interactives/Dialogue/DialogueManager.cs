@@ -81,7 +81,6 @@ public class DialogueManager : MonoBehaviour
     }
     #endregion
 
-
     #region START DIALOGUE
     public void StartDialogue(Dialogue dialogue)
     {
