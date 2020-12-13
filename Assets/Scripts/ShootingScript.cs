@@ -18,8 +18,8 @@ public class ShootingScript : MonoBehaviour
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] float fireRate2 = 0.8f;
     float timerToShoot, timerToShoot2;
-    float shoot1Charge;
-    float shoot2Charge;
+    private float shoot1Charge;
+    private float shoot2Charge;
     // Start is called before the first frame update
     void Start()
     {
@@ -73,5 +73,15 @@ public class ShootingScript : MonoBehaviour
         canShoot2 = false;
         Rigidbody bulletClone2 = (Rigidbody)Instantiate(crystal, leftPistol.transform.position, leftPistol.transform.rotation);
         bulletClone2.velocity = transform.forward * CrystalSpeed;
+    }
+
+    float GetShootCharge1()
+    {
+        return shoot1Charge;
+    }
+
+    float GetShootCharge2()
+    {
+        return shoot2Charge;
     }
 }
