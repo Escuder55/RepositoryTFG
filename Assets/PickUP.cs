@@ -30,7 +30,7 @@ public class PickUP : MonoBehaviour
     {
         if (other.CompareTag("CanBeHitted") && !isObjectInside)
         {
-            Debug.Log("ENTRA UN OBJETO");
+            //Debug.Log("ENTRA UN OBJETO");
 
             isObjectInside = true;
 
@@ -41,12 +41,12 @@ public class PickUP : MonoBehaviour
     }
     #endregion
 
-    #region TRIGGER ENTER
+    #region TRIGGER EXIT
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("CanBeHitted") && other.gameObject.name == objectName )
         {
-            Debug.Log("ENTRA UN OBJETO");
+            Debug.Log("SALE UN OBJETO");
 
             isObjectInside = false;
 

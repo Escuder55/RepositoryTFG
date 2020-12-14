@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum mobilityType { MOBILE, STATIC, NONE };
+public enum mobilityType { MOBILE, STATIC, FIXED, NONE };
 public enum iman { POSITIVE, NEGATIVE, NONE };
 public enum forceType { ATRACT, REPULSE, NONE };
 
@@ -53,7 +53,7 @@ public class ImanBehavior : MonoBehaviour
         {
             if (applyForce)
             {
-                Debug.Log("ha de palicart la fuerza : " + directionForce * force);
+                //Debug.Log("ha de palicart la fuerza : " + directionForce * force);
                 myRB.AddForce(directionForce * force, ForceMode.Force);
                 directionForce = new Vector3(0, 0, 0);
                 timerActive -= Time.fixedDeltaTime;
@@ -191,7 +191,7 @@ public class ImanBehavior : MonoBehaviour
     {
         this.gameObject.tag = "CanBeHitted";
         nearImantableObjects.Clear();
-        myPole = iman.NONE;
+        if (mobility != mobilityType.FIXED) myPole = iman.NONE;
         applyForce = false;
         timerActive = timeActive;
         timerImanted = timeImanted;

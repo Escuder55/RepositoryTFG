@@ -15,6 +15,7 @@ public class PlatformMobile : MonoBehaviour
     public ImanBehavior leftBounderIman;
     public ImanBehavior rightBounderIman;
     [Header("PLATFORM MOVEMENT")]
+    public Transform platform;
     public float speed = 1.5f;
     public Transform leftSide;
     public Transform rightSide;
@@ -38,6 +39,12 @@ public class PlatformMobile : MonoBehaviour
                 }
             case PlatformPosition.LEFT:
                 {
+                    if (platformIman.myPole != iman.NONE && platformIman.myPole == leftBounderIman.myPole)
+                    {
+                        currentPosition = PlatformPosition.GOING_TO_RIGHT;
+
+                        GoToRight();
+                    }
                     break;
                 }
             case PlatformPosition.GOING_TO_LEFT:
@@ -50,6 +57,12 @@ public class PlatformMobile : MonoBehaviour
                 }
             case PlatformPosition.RIGHT:
                 {
+                    if (platformIman.myPole != iman.NONE && platformIman.myPole == leftBounderIman.myPole)
+                    {
+                        currentPosition = PlatformPosition.GOING_TO_RIGHT;
+
+                        GoToRight();
+                    }
                     break;
                 }
             default:
@@ -61,42 +74,78 @@ public class PlatformMobile : MonoBehaviour
     #region GO TO LEFT
     void GoToLeft()
     {
+        platform.DOMove(leftSide.position, speed);
 
+        Invoke("ArriveToLeft", speed);
+    }
+    #endregion
+
+    #region ARRIVE LEFT
+    void ArriveToLeft()
+    {
+        currentPosition = PlatformPosition.LEFT;
     }
     #endregion
 
     #region GO TO RIGHT
     void GoToRight()
     {
+        platform.DOMove(rightSide.position, speed);
 
+        Invoke("ArriveToRight", speed);
     }
     #endregion
-    
+
+    #region ARRIVE RIGHT
+    void ArriveToRight()
+    {
+        currentPosition = PlatformPosition.RIGHT;
+    }
+    #endregion
+
     #region TRIGGER ENTER
     private void OnTriggerEnter(Collider other)
     {
-        
+        Debug.Log("Entra el jugador");
+        if (other.CompareTag("Player"))
+        {
+            
+            //SetParent(other);
+
+            other.transform.SetParent(this.transform);
+            //other.transform.parent = this.transform;
+        }
     }
     #endregion
 
     #region TRIGGER EXIT
     private void OnTriggerExit(Collider other)
     {
-        
+        Debug.Log("Sale el jugador");
+        if (other.CompareTag("Player"))
+        {
+            
+            //UnsetParent(other);
+
+            other.transform.SetParent(null);
+            //other.transform.parent = null;
+        }
     }
     #endregion
 
     #region SET PARENT
-    void SetParent()
+    void SetParent(Collider other)
     {
-
+        other.transform.SetParent(this.transform);
+        //other.transform.parent = this.transform;
     }
     #endregion
 
     #region UNSET PARENT
-    void UnsetParent()
+    void UnsetParent(Collider other)
     {
-
+        other.transform.SetParent(null);
+        //other.transform.parent = null;
     }
     #endregion
 
