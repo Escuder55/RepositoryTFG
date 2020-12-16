@@ -43,6 +43,11 @@ public class rvMovementPers : MonoBehaviour
     private int maxHealth = 100;
     bool onLiquidSlower = false;
 
+    [Header("CAMERA")]
+    [SerializeField] Camera mainCamera;
+    [SerializeField] private Vector3 camForward;
+    [SerializeField] private Vector3 camRight;
+
     private void Start()
     {
         dashCounter = timeToNextDash;
@@ -61,6 +66,9 @@ public class rvMovementPers : MonoBehaviour
 
         _isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
 
+        //GETTING CAMERA DIRECTION
+        CamDirection();
+
 
         if (_isGrounded && ((myRb.drag != 7)|| (myRb.drag != 14)))
         {
@@ -72,9 +80,10 @@ public class rvMovementPers : MonoBehaviour
         else if(!_isGrounded)
             myRb.drag = 0;
 
-        
 
-        desiredVelocity= new Vector3(horizontal,0f,vertical);
+
+        //desiredVelocity= new Vector3(horizontal,0f,vertical);
+        desiredVelocity = horizontal * camRight + vertical *camForward;
         desiredVelocity.Normalize();
         //move respect camera
 
@@ -104,6 +113,19 @@ public class rvMovementPers : MonoBehaviour
         }
     }
 
+    #region CAMERA DIRECTION
+    void CamDirection()
+    {
+        camForward = mainCamera.transform.forward;
+        camRight = mainCamera.transform.right;
+
+        camForward.y = 0;
+        camRight.y = 0;
+
+        camForward = camForward.normalized;
+        camRight = camRight.normalized;
+    }
+    #endregion
 
     private void FixedUpdate()
     {
