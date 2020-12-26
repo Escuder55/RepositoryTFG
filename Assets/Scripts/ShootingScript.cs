@@ -12,78 +12,81 @@ public class ShootingScript : MonoBehaviour
     public Rigidbody crystal;
     public Transform rightPistol;
     public Transform leftPistol;
-    bool canShoot = true;
-    bool canShoot2 = true;
-    [SerializeField] float fireRate = 0.5f;
-    [SerializeField] float fireRate2 = 0.8f;
-    float timerToShoot, timerToShoot2;
-    private float shoot1Charge;
-    private float shoot2Charge;
+    bool canShootPositive = true;
+    bool canShootNegative = true;
+    float positiveCharge = 1;
+    float negativeCharge = 1;
+    bool isChargingNegative, isChargingPositive = false;
     // Start is called before the first frame update
     void Start()
     {
-        timerToShoot = fireRate;
-        timerToShoot2 = fireRate2;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && canShoot)
+        if (Input.GetButtonDown("Fire1") && canShootNegative)
+        {
+            isChargingNegative = true;
+        }
+        if (Input.GetButtonUp("Fire1"))
         {
             ShootNegative();
+            negativeCharge = 1;
+            isChargingNegative = false;
         }
-        if (Input.GetButtonDown("Fire2") && canShoot2)
+        if (Input.GetButtonDown("Fire2") && canShootPositive)
+        {
+            isChargingPositive = true;
+        }
+        if (Input.GetButtonUp("Fire2"))
         {
             ShootPositive();
+            positiveCharge = 1;
+            isChargingPositive = false;
         }
     }
+
     private void FixedUpdate()
     {
-        if (!canShoot)
+        if (isChargingNegative)
         {
-            timerToShoot -= Time.fixedDeltaTime;
-            if (timerToShoot <= 0)
-            {
-                canShoot = true;
-                timerToShoot = fireRate;
-            }
+            if (negativeCharge <= 3)
+                negativeCharge += Time.fixedDeltaTime;
+           // Debug.Log(negativeCharge);
         }
-
-        if (!canShoot2)
+        if (isChargingPositive)
         {
-            timerToShoot2 -= Time.fixedDeltaTime;
-            if (timerToShoot2 <= 0)
-            {
-                canShoot2 = true;
-                timerToShoot2 = fireRate2;
-            }
+            if (positiveCharge <= 3)
+                positiveCharge += Time.fixedDeltaTime;
+            //Debug.Log(positiveCharge);
         }
     }
 
     void ShootNegative()
     {
-        canShoot = false;
         Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, rightPistol.transform.position, rightPistol.transform.rotation);
         bulletClone.gameObject.GetComponent<BulletScript>().SetPole(iman.NEGATIVE);
+        bulletClone.gameObject.GetComponent<BulletScript>().SetCharge((int)negativeCharge);
         bulletClone.velocity = transform.forward * bulletSpeed;
     }
 
     void ShootPositive()
     {
-        canShoot2 = false;
         Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, leftPistol.transform.position, leftPistol.transform.rotation);
         bulletClone.gameObject.GetComponent<BulletScript>().SetPole(iman.POSITIVE);
+        bulletClone.gameObject.GetComponent<BulletScript>().SetCharge((int)positiveCharge);
         bulletClone.velocity = transform.forward * bulletSpeed;
     }
 
     float GetShootCharge1()
     {
-        return shoot1Charge;
+        return positiveCharge;
     }
 
     float GetShootCharge2()
     {
-        return shoot2Charge;
+        return negativeCharge;
     }
 }

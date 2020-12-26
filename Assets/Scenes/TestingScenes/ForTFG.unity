@@ -787,7 +787,7 @@ PrefabInstance:
     - target: {fileID: 261343777559025744, guid: 69c48479cf368fc448bfe918f70224d6,
         type: 3}
       propertyPath: m_Constraints
-      value: 126
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 261343777559025745, guid: 69c48479cf368fc448bfe918f70224d6,
         type: 3}
@@ -852,7 +852,7 @@ PrefabInstance:
     - target: {fileID: 261343777559025751, guid: 69c48479cf368fc448bfe918f70224d6,
         type: 3}
       propertyPath: mobility
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69c48479cf368fc448bfe918f70224d6, type: 3}
