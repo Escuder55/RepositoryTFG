@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum mobilityType { MOBILE, STATIC, NONE };
+public enum mobilityType { MOBILE, STATIC, NONE, SEMIMOVIBLE };
 public enum iman { POSITIVE, NEGATIVE, NONE };
 public enum forceType { ATRACT, REPULSE, NONE };
 
@@ -11,7 +11,7 @@ public class ImanBehavior : MonoBehaviour
     [SerializeField] private List<GameObject> nearImantableObjects;
 
     [Header("CHECKING CHARGES")]
-    SphereCollider mysphereCollider;
+    [SerializeField]SphereCollider mysphereCollider;
     [Header("ELEMENT TYPE")]
     public mobilityType mobility = mobilityType.NONE;
     public iman myPole = iman.NONE;
@@ -34,7 +34,7 @@ public class ImanBehavior : MonoBehaviour
     void Start()
     {
         myRB = this.GetComponent<Rigidbody>();
-        mysphereCollider = this.GetComponent<SphereCollider>();
+        mysphereCollider = this.GetComponentInChildren<SphereCollider>();
         mysphereCollider.radius = 0.5f;
         nearImantableObjects = new List<GameObject>();
         timerActive = timeActive;
@@ -51,9 +51,9 @@ public class ImanBehavior : MonoBehaviour
     {        
         if (myPole != iman.NONE)
         {
-            if (applyForce)
+            if (applyForce && mobility==mobilityType.MOBILE)
             {
-                Debug.Log("ha de palicart la fuerza : " + directionForce * force);
+                //Debug.Log("ha de palicart la fuerza : " + directionForce * force);
                 myRB.AddForce(directionForce * force, ForceMode.Force);
                 directionForce = new Vector3(0, 0, 0);
                 timerActive -= Time.fixedDeltaTime;
@@ -70,16 +70,17 @@ public class ImanBehavior : MonoBehaviour
 
     #region UPDATING ELEMENTS NEAR
     private void OnTriggerEnter(Collider other)
-    {
+    {        
         if (myPole != iman.NONE)
         {
-            if ((other.gameObject.layer == 10) && other.gameObject != this.gameObject)
-            {
-                if (!nearImantableObjects.Contains(other.gameObject))
-                {
-                    nearImantableObjects.Add(other.gameObject);
-                }
-            }
+            if (other.gameObject.transform.parent != null)
+            {                
+                if (other.gameObject.transform.parent.gameObject.tag == "CanBeHitted")
+                    if (!nearImantableObjects.Contains(other.gameObject.transform.parent.gameObject))
+                    {
+                        nearImantableObjects.Add(other.gameObject.transform.parent.gameObject);
+                    }
+            }            
         }
     }
 
@@ -157,7 +158,7 @@ public class ImanBehavior : MonoBehaviour
 
     public void AddCharge(iman typeIman, int numCharge)
     {
-        this.gameObject.tag = "Untagged";
+        //this.gameObject.tag = "Untagged";
         //Primero asignamos polo para que no haya problemas en otra parte del codigo
         if (typeIman == iman.POSITIVE)
             myPole = iman.POSITIVE;
@@ -184,7 +185,9 @@ public class ImanBehavior : MonoBehaviour
             default:
                 break;
         }
-
+        //Reset timers
+        timerActive = timeActive;
+        timerImanted = timeImanted;
     }
 
     private void ResetObject()
