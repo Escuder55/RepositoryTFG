@@ -36,7 +36,11 @@ public class BulletScript : MonoBehaviour
     public void SetPole(iman pole)
     {
         myPole = pole;
-        Debug.Log(pole);
+    }
+
+    public void SetCharge(int charge)
+    {
+        numCharge = charge;
     }
 
     private void Die()

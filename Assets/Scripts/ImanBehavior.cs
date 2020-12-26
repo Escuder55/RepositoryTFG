@@ -19,7 +19,7 @@ public class ImanBehavior : MonoBehaviour
     private Rigidbody myRB;
 
     [Header("FORCES")]
-    [SerializeField] float force = 10;
+    [SerializeField] float force = 3;
     [SerializeField] float timerImanted = 8f;
     [SerializeField] float timerActive = 3f;
     [SerializeField] float timeImanted = 8f;
@@ -54,7 +54,7 @@ public class ImanBehavior : MonoBehaviour
             if (applyForce && mobility==mobilityType.MOBILE)
             {
                 //Debug.Log("ha de palicart la fuerza : " + directionForce * force);
-                myRB.AddForce(directionForce * force, ForceMode.Force);
+                myRB.AddForce(directionForce * force , ForceMode.Force);
                 directionForce = new Vector3(0, 0, 0);
                 timerActive -= Time.fixedDeltaTime;
                 if (timerActive <= 0)
@@ -125,7 +125,7 @@ public class ImanBehavior : MonoBehaviour
     {
         Vector3 finalForce = new Vector3(0, 0, 0);
         //Suma de cargas
-        float numChargesSum = numChargesAdded + otherGO.GetComponent<ImanBehavior>().numChargesAdded;
+        float numChargesSum = (numChargesAdded + otherGO.GetComponent<ImanBehavior>().numChargesAdded)*2f;
 
         switch (typeOfForce)
         {
@@ -172,15 +172,15 @@ public class ImanBehavior : MonoBehaviour
         {
             case 1:
                 mysphereCollider.enabled = true;
-                mysphereCollider.radius = numCharge * 3.5f;
+                mysphereCollider.radius = 3.5f;
                 break;
             case 2:
                 mysphereCollider.enabled = true;
-                mysphereCollider.radius = numCharge * 3.5f;
+                mysphereCollider.radius = 4.5f;
                 break;
             case 3:
                 mysphereCollider.enabled = true;
-                mysphereCollider.radius = numCharge * 3.5f;
+                mysphereCollider.radius = 8;
                 break;
             default:
                 break;
