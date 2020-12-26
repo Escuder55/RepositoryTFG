@@ -8,7 +8,6 @@ public class ShootingScript : MonoBehaviour
     [Header("GUN")]
     public float damage = 10f;
     public float bulletSpeed = 100;
-    public float CrystalSpeed = 80;
     public Rigidbody bullet;
     public Rigidbody crystal;
     public Transform rightPistol;
@@ -61,18 +60,21 @@ public class ShootingScript : MonoBehaviour
             }
         }
     }
+
     void ShootNegative()
     {
         canShoot = false;
         Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, rightPistol.transform.position, rightPistol.transform.rotation);
+        bulletClone.gameObject.GetComponent<BulletScript>().SetPole(iman.NEGATIVE);
         bulletClone.velocity = transform.forward * bulletSpeed;
     }
 
     void ShootPositive()
     {
         canShoot2 = false;
-        Rigidbody bulletClone2 = (Rigidbody)Instantiate(crystal, leftPistol.transform.position, leftPistol.transform.rotation);
-        bulletClone2.velocity = transform.forward * CrystalSpeed;
+        Rigidbody bulletClone = (Rigidbody)Instantiate(bullet, leftPistol.transform.position, leftPistol.transform.rotation);
+        bulletClone.gameObject.GetComponent<BulletScript>().SetPole(iman.POSITIVE);
+        bulletClone.velocity = transform.forward * bulletSpeed;
     }
 
     float GetShootCharge1()

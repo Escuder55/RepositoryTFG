@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum mobilityType { MOBILE, STATIC, NONE };
+public enum mobilityType { MOBILE, STATIC, NONE, SEMIMOVIBLE };
 public enum iman { POSITIVE, NEGATIVE, NONE };
 public enum forceType { ATRACT, REPULSE, NONE };
 
@@ -51,7 +51,7 @@ public class ImanBehavior : MonoBehaviour
     {        
         if (myPole != iman.NONE)
         {
-            if (applyForce)
+            if (applyForce && mobility==mobilityType.MOBILE)
             {
                 //Debug.Log("ha de palicart la fuerza : " + directionForce * force);
                 myRB.AddForce(directionForce * force, ForceMode.Force);
@@ -74,18 +74,13 @@ public class ImanBehavior : MonoBehaviour
         if (myPole != iman.NONE)
         {
             if (other.gameObject.transform.parent != null)
-            {
-                Debug.Log(other.gameObject.transform.parent.gameObject.tag);
-                if (other.gameObject.transform.parent.gameObject.tag == "Player")
-                    Debug.Log("HayUno");
-            }
-            //if ((other.gameObject.layer == 10))
-            //{
-            //    if (!nearImantableObjects.Contains(other.gameObject.transform.parent.gameObject))
-            //    {
-            //        nearImantableObjects.Add(other.gameObject.transform.parent.gameObject);
-            //    }
-            //}
+            {                
+                if (other.gameObject.transform.parent.gameObject.tag == "CanBeHitted")
+                    if (!nearImantableObjects.Contains(other.gameObject.transform.parent.gameObject))
+                    {
+                        nearImantableObjects.Add(other.gameObject.transform.parent.gameObject);
+                    }
+            }            
         }
     }
 

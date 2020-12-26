@@ -7,6 +7,7 @@ public class BulletScript : MonoBehaviour
     int numCharge = 1;
     public float distanceCanReach = 40;
     Vector3 initialPosition;
+    iman myPole;
 
     private void Start()
     {
@@ -27,9 +28,15 @@ public class BulletScript : MonoBehaviour
     {
         if (other.tag == "CanBeHitted")
         {
-            other.GetComponent<ImanBehavior>().AddCharge(iman.NEGATIVE, numCharge);
+            other.GetComponent<ImanBehavior>().AddCharge(myPole, numCharge);
             Die();
         }
+    }
+
+    public void SetPole(iman pole)
+    {
+        myPole = pole;
+        Debug.Log(pole);
     }
 
     private void Die()
