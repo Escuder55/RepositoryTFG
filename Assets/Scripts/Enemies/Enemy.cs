@@ -48,7 +48,6 @@ public class Enemy : Agent
     [Header("PLAYER")]
     public float maxDistanceToPlayer = 20f;
     public float minDistanceToPlayer = 1.5f;
-    Player player;
     Rigidbody playerRB;
     Transform playerTransform;
 
@@ -88,7 +87,6 @@ public class Enemy : Agent
         GameObject auxPlayer = GameObject.FindGameObjectWithTag("Player");
         if (auxPlayer != null)
         {
-            player = auxPlayer.GetComponent<Player>();
             playerTransform = auxPlayer.transform;
             playerRB = auxPlayer.GetComponent<Rigidbody>();
         }
@@ -394,7 +392,6 @@ public class Enemy : Agent
         #region CAUSE DAMAGE
         public void CauseDamage(int _damage)
         {
-            player.life -= _damage;
         }
         #endregion
 
