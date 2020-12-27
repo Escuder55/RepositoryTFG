@@ -9,8 +9,10 @@ public class PressureButton : MonoBehaviour
     #region TRIGGER ENTER
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("ENTRA ALGO:  " + other.gameObject.tag);
         if (other.CompareTag("CanBeHitted"))
         {
+
             manager.IncreaseButtonPressed();
         }   
     }
